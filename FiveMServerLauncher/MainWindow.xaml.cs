@@ -30,6 +30,8 @@ namespace FiveMServerLauncher
 
 			jsonHandler = new JSONHandler(Directory.GetCurrentDirectory());
 
+			jsonHandler.SetRestartEnabled(true);
+
 			List<(int hour, int minute)> restartData = new List<(int hour, int minute)>();
 			restartData.Add((6, 00));
 			restartData.Add((12, 00));
@@ -38,12 +40,15 @@ namespace FiveMServerLauncher
 
 			jsonHandler.SetRestartData(restartData);
 
-			restartData = jsonHandler.GetRestartData();
-
-			foreach ((int hour, int minute) data in restartData)
+			foreach ((int hour, int minute) data in jsonHandler.GetRestartData())
 			{
 				Console.WriteLine("Time - " + data.hour + ":" + data.minute);
 			}
+
+			jsonHandler.SetServerDirectory(@"C:\Users\jacks\Desktop\Additional Folders\TestFile");
+			Console.WriteLine(jsonHandler.GetServerDirectory());
+
+			Console.WriteLine("Restart Enabled - " + jsonHandler.GetRestartEnabled());
 		}
 	}
 }
