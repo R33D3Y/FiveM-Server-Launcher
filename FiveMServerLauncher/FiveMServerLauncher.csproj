@@ -121,6 +121,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppToken.cs" />
     <Compile Include="RestartControl.xaml.cs">
       <DependentUpon>RestartControl.xaml</DependentUpon>
     </Compile>

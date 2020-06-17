@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,7 +20,7 @@ namespace FiveMServerLauncher
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
-			AppCenter.Start("af26c3b5-f83a-4a9b-8e96-32bc27773d54", typeof(Analytics), typeof(Crashes));
+			AppCenter.Start(AppToken.ID, typeof(Analytics), typeof(Crashes));
 		}
 	}
 }
