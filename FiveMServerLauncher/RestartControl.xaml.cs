@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FiveMServerLauncher
 {
@@ -20,14 +8,12 @@ namespace FiveMServerLauncher
 	/// </summary>
 	public partial class RestartControl : UserControl
 	{
-		private int scheduleCount;
-		private RestartData restartData;
-		private JSONHandler jsonHandler;
+		private readonly RestartData restartData;
+		private readonly JSONHandler jsonHandler;
 
 		public RestartControl(int count, RestartData rData, JSONHandler jHandler)
 		{
 			InitializeComponent();
-			scheduleCount = count;
 			restartData = rData;
 			jsonHandler = jHandler;
 
@@ -63,19 +49,19 @@ namespace FiveMServerLauncher
 			comboBoxWarningMinute.SelectedIndex = restartData.MinuteWarning;
 		}
 
-		private void comboBoxHour_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void ComboBoxHour_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			restartData.RestartHour = comboBoxHour.SelectedIndex;
 			jsonHandler.UpdateJSON();
 		}
 
-		private void comboBoxMinute_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void ComboBoxMinute_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			restartData.RestartMinute = comboBoxMinute.SelectedIndex;
 			jsonHandler.UpdateJSON();
 		}
 
-		private void radioButton_Checked(object sender, RoutedEventArgs e)
+		private void RadioButton_Checked(object sender, RoutedEventArgs e)
 		{
 			if ((bool)radioButtonStart.IsChecked)
 			{
@@ -93,10 +79,17 @@ namespace FiveMServerLauncher
 			jsonHandler.UpdateJSON();
 		}
 
-		private void comboBoxWarningMinute_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void ComboBoxWarningMinute_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			restartData.MinuteWarning = comboBoxWarningMinute.SelectedIndex;
 			jsonHandler.UpdateJSON();
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			jsonHandler.RestartInformation.Data.Remove(restartData);
+			jsonHandler.UpdateJSON();
+			jsonHandler.UpdateUI = true;
 		}
 	}
 }

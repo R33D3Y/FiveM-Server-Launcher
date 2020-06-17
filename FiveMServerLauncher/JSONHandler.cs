@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace FiveMServerLauncher
@@ -27,7 +27,7 @@ namespace FiveMServerLauncher
 				writer.WriteStartObject();
 
 				writer.WritePropertyName("Server Directory");
-				writer.WriteValue(path);
+				writer.WriteValue(serverDirectory);
 
 				writer.WritePropertyName("Restart Enabled");
 				writer.WriteValue(RestartInformation.Enabled);
@@ -57,6 +57,8 @@ namespace FiveMServerLauncher
 		{
 			WriteJSON();
 		}
+
+		public bool UpdateUI { get; set; }
 
 		public RestartInformation RestartInformation { get; private set; } = new RestartInformation();
 
@@ -155,15 +157,24 @@ namespace FiveMServerLauncher
 				}
 			}
 
+			LogDirectory = serverDirectory + @"\LogFiles\";
+
 			return serverDirectory;
 		}
 
-		public void SetServerDirectory(string path)
+		public void SetServerDirectory(string p)
 		{
-			serverDirectory = path;
+			serverDirectory = p;
+			LogDirectory = serverDirectory + @"\LogFiles\";
 			WriteJSON();
 		}
 
 		#endregion Server Directory
+
+		#region Log Directory
+
+		public string LogDirectory { get; private set; }
+
+		#endregion Log Directory
 	}
 }

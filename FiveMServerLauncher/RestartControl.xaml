@@ -9,14 +9,20 @@
         <Label x:Name="label" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,0,0,0"/>
 
         <Label x:Name="labelTime" Content="Time" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="114,24,0,0"/>
-        <ComboBox x:Name="comboBoxHour" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="4,26,0,0" SelectionChanged="comboBoxHour_SelectionChanged"/>
-        <ComboBox x:Name="comboBoxMinute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="59,26,0,0" SelectionChanged="comboBoxMinute_SelectionChanged"/>
+        <ComboBox x:Name="comboBoxHour" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="4,26,0,0" SelectionChanged="ComboBoxHour_SelectionChanged"/>
+        <ComboBox x:Name="comboBoxMinute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="59,26,0,0" SelectionChanged="ComboBoxMinute_SelectionChanged"/>
 
-        <RadioButton x:Name="radioButtonStop" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="111,49,0,0" Checked="radioButton_Checked"/>
-        <RadioButton x:Name="radioButtonRestart" Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="52,49,0,0" Checked="radioButton_Checked"/>
-        <RadioButton x:Name="radioButtonStart" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,49,0,0" Checked="radioButton_Checked"/>
+        <RadioButton x:Name="radioButtonStop" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="111,49,0,0" Checked="RadioButton_Checked"/>
+        <RadioButton x:Name="radioButtonRestart" Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="52,49,0,0" Checked="RadioButton_Checked"/>
+        <RadioButton x:Name="radioButtonStart" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,49,0,0" Checked="RadioButton_Checked"/>
 
         <Label x:Name="labelWarning" Content="Server Warning" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="59,64,0,0"/>
-        <ComboBox x:Name="comboBoxWarningMinute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="4,66,0,0" SelectionChanged="comboBoxWarningMinute_SelectionChanged"/>
+        <ComboBox x:Name="comboBoxWarningMinute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="4,66,0,0" SelectionChanged="ComboBoxWarningMinute_SelectionChanged"/>
+
+        <Button x:Name="button" HorizontalAlignment="Left" Margin="136,1,0,0" VerticalAlignment="Top" Width="25" Height="25" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="Button_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="closeIcon.png"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </UserControl>
