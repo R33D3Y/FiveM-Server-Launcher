@@ -23,7 +23,7 @@ namespace FiveMServerLauncher
 	public partial class MainWindow : Window
 	{
 		private JSONHandler jsonHandler;
-		private RestartData restartData;
+		private RestartInformation restartInformation;
 
 		public MainWindow()
 		{
@@ -31,40 +31,36 @@ namespace FiveMServerLauncher
 
 			jsonHandler = new JSONHandler(Directory.GetCurrentDirectory());
 
-			//jsonHandler.SetRestartEnabled(true);
+			jsonHandler.SetRestartEnabled(true);
 
-			//List<(int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning)> data = new List<(int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning)>
-			//{
-			//	(6, 00, RestartType.Restart, 5),
-			//	(12, 00, RestartType.Stop, 10),
-			//	(18, 00, RestartType.Start, 10),
-			//	(0, 00, RestartType.Restart, 5),
-			//};
+			jsonHandler.AddRestartData(new RestartData(6, 00, RestartType.Restart, 5));
+			jsonHandler.AddRestartData(new RestartData(12, 00, RestartType.Stop, 10));
+			jsonHandler.AddRestartData(new RestartData(18, 00, RestartType.Start, 10));
+			jsonHandler.AddRestartData(new RestartData(0, 00, RestartType.Restart, 5));
 
-			//jsonHandler.SetRestartData(data);
-			//jsonHandler.SetServerDirectory(@"C:\Users\jacks\Desktop\Additional Folders\TestFile");
+			jsonHandler.SetServerDirectory(@"C:\Users\jacks\Desktop\Additional Folders\TestFile");
 
 			jsonHandler.RestartDataUpdate();
-			restartData = jsonHandler.RestartData;
+			restartInformation = jsonHandler.RestartInformation;
 
-			foreach ((int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning) data_ in restartData.Data)
-			{
-				Console.WriteLine("Restart - " + data_.RestartHour + ":" + data_.RestartMinute + " " + data_.RestartType + " " + data_.MinuteWarning);
-			}
+			//foreach (RestartData data_ in restartInformation.Data)
+			//{
+			//	Console.WriteLine("Restart - " + data_.RestartHour + ":" + data_.RestartMinute + " " + data_.RestartType + " " + data_.MinuteWarning);
+			//}
 
-			Console.WriteLine(jsonHandler.GetServerDirectory());
-			Console.WriteLine("Restart Enabled - " + restartData.Enabled);
+			//Console.WriteLine(jsonHandler.GetServerDirectory());
+			//Console.WriteLine("Restart Enabled - " + restartInformation.Enabled);
 
-			RestartControl restartControl = new RestartControl(0, restartData);
+			RestartControl restartControl = new RestartControl(0, restartInformation.Data[0], jsonHandler);
 			RestartControlPanel.Children.Add(restartControl);
 
-			RestartControl restartControl1 = new RestartControl(1, restartData);
+			RestartControl restartControl1 = new RestartControl(1, restartInformation.Data[1], jsonHandler);
 			RestartControlPanel.Children.Add(restartControl1);
 
-			RestartControl restartControl2 = new RestartControl(2, restartData);
+			RestartControl restartControl2 = new RestartControl(2, restartInformation.Data[2], jsonHandler);
 			RestartControlPanel.Children.Add(restartControl2);
 
-			RestartControl restartControl3 = new RestartControl(3, restartData);
+			RestartControl restartControl3 = new RestartControl(3, restartInformation.Data[3], jsonHandler);
 			RestartControlPanel.Children.Add(restartControl3);
 		}
 	}

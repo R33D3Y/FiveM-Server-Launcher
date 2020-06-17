@@ -126,6 +126,7 @@
       <DependentUpon>RestartControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="RestartData.cs" />
+    <Compile Include="RestartInformation.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

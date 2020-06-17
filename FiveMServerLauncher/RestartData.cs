@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-
-namespace FiveMServerLauncher
+﻿namespace FiveMServerLauncher
 {
 	public class RestartData
 	{
-		public bool Enabled = false;
-		public readonly List<(int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning)> Data = new List<(int, int, RestartType, int )>();
-	}
+		public int RestartHour;
+		public int RestartMinute;
+		public RestartType RestartType;
+		public int MinuteWarning;
 
-	public enum RestartType
-	{ 
-		Restart,
-		Start,
-		Stop
+		public RestartData(int restartHour, int restartMinute, RestartType restartType, int minuteWarning)
+		{
+			RestartHour = restartHour;
+			RestartMinute = restartMinute;
+			RestartType = restartType;
+			MinuteWarning = minuteWarning;
+		}
 	}
 }

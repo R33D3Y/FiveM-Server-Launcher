@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FiveMServerLauncher
 {
-	class JSONHandler
+	public class JSONHandler
 	{
 		private string path;
 		private string jsonPath;
@@ -30,11 +30,11 @@ namespace FiveMServerLauncher
 				writer.WriteValue(path);
 
 				writer.WritePropertyName("Restart Enabled");
-				writer.WriteValue(RestartData.Enabled);
+				writer.WriteValue(RestartInformation.Enabled);
 
 				int count = 0;
 
-				foreach ((int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning) data in RestartData.Data)
+				foreach (RestartData data in RestartInformation.Data)
 				{
 					writer.WritePropertyName("Schedule Data " + count);
 					writer.WriteStartArray();
@@ -53,7 +53,12 @@ namespace FiveMServerLauncher
 			File.WriteAllText(jsonPath, sb.ToString());
 		}
 
-		public RestartData RestartData { get; private set; } = new RestartData();
+		public void UpdateJSON()
+		{
+			WriteJSON();
+		}
+
+		public RestartInformation RestartInformation { get; private set; } = new RestartInformation();
 
 		public void RestartDataUpdate()
 		{
@@ -74,7 +79,7 @@ namespace FiveMServerLauncher
 					if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString().StartsWith("Restart Enabled"))
 					{
 						reader.Read(); // Property Name
-						bool.TryParse(reader.Value.ToString(), out RestartData.Enabled);
+						bool.TryParse(reader.Value.ToString(), out RestartInformation.Enabled);
 					}
 				}
 			};
@@ -82,7 +87,7 @@ namespace FiveMServerLauncher
 
 		public void SetRestartEnabled(bool state)
 		{
-			RestartData.Enabled = state;
+			RestartInformation.Enabled = state;
 			WriteJSON();
 		}
 
@@ -93,7 +98,7 @@ namespace FiveMServerLauncher
 		private void GetRestartData()
 		{
 			JsonTextReader reader = new JsonTextReader(new StringReader(File.ReadAllText(jsonPath)));
-			RestartData.Data.Clear();
+			RestartInformation.Data.Clear();
 
 			while (reader.Read())
 			{
@@ -110,16 +115,21 @@ namespace FiveMServerLauncher
 						System.Enum.TryParse(reader.Value.ToString(), out RestartType restartType);
 						reader.Read(); // Minute Warning
 						int.TryParse(reader.Value.ToString(), out int minuteWarning);
-						RestartData.Data.Add((hour, minute, restartType, minuteWarning));
+						RestartInformation.Data.Add(new RestartData(hour, minute, restartType, minuteWarning));
 					}
 				}
 			}
 		}
 
-		public void SetRestartData(List<(int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning)> data)
+		public void AddRestartData(RestartData data)
 		{
-			RestartData.Data.Clear();
-			RestartData.Data.AddRange(data);
+			RestartInformation.Data.Add(data);
+			WriteJSON();
+		}
+
+		public void RemoveRestartData(RestartData data)
+		{
+			RestartInformation.Data.Remove(data);
 			WriteJSON();
 		}
 
