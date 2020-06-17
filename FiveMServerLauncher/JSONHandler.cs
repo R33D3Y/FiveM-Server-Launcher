@@ -30,16 +30,18 @@ namespace FiveMServerLauncher
 				writer.WriteValue(path);
 
 				writer.WritePropertyName("Restart Enabled");
-				writer.WriteValue(restartEnabled);
+				writer.WriteValue(RestartData.Enabled);
 
 				int count = 0;
 
-				foreach ((int hour, int minute) restartData in restartDataList)
+				foreach ((int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning) data in RestartData.Data)
 				{
-					writer.WritePropertyName("Restart Data " + count);
+					writer.WritePropertyName("Schedule Data " + count);
 					writer.WriteStartArray();
-					writer.WriteValue(restartData.hour);
-					writer.WriteValue(restartData.minute);
+					writer.WriteValue(data.RestartHour);
+					writer.WriteValue(data.RestartMinute);
+					writer.WriteValue(data.RestartType);
+					writer.WriteValue(data.MinuteWarning);
 					writer.WriteEnd();
 
 					count++;
@@ -51,11 +53,17 @@ namespace FiveMServerLauncher
 			File.WriteAllText(jsonPath, sb.ToString());
 		}
 
+		public RestartData RestartData { get; private set; } = new RestartData();
+
+		public void RestartDataUpdate()
+		{
+			GetRestartEnabled();
+			GetRestartData();
+		}
+
 		#region Restart Enabled
 
-		private bool restartEnabled;
-
-		public bool GetRestartEnabled()
+		public void GetRestartEnabled()
 		{
 			JsonTextReader reader = new JsonTextReader(new StringReader(File.ReadAllText(jsonPath)));
 
@@ -66,52 +74,52 @@ namespace FiveMServerLauncher
 					if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString().StartsWith("Restart Enabled"))
 					{
 						reader.Read(); // Property Name
-						bool.TryParse(reader.Value.ToString(), out restartEnabled);
+						bool.TryParse(reader.Value.ToString(), out RestartData.Enabled);
 					}
 				}
-			}
-
-			return restartEnabled;
+			};
 		}
 
 		public void SetRestartEnabled(bool state)
 		{
-			restartEnabled = state;
+			RestartData.Enabled = state;
+			WriteJSON();
 		}
 
 		#endregion Restart Enabled
 
 		#region Restart Data
 
-		private List<(int hour, int minute)> restartDataList;
-
-		public List<(int hour, int minute)> GetRestartData()
+		private void GetRestartData()
 		{
-			restartDataList = new List<(int hour, int minute)>();
 			JsonTextReader reader = new JsonTextReader(new StringReader(File.ReadAllText(jsonPath)));
+			RestartData.Data.Clear();
 
 			while (reader.Read())
 			{
 				if (reader.Value != null)
 				{
-					if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString().StartsWith("Restart Data"))
+					if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString().StartsWith("Schedule Data"))
 					{
 						reader.Read(); // StartArray
-						reader.Read(); // Hour
+						reader.Read(); // Restart Hour
 						int.TryParse(reader.Value.ToString(), out int hour);
-						reader.Read(); // Minute
+						reader.Read(); // Restart Minute
 						int.TryParse(reader.Value.ToString(), out int minute);
-						restartDataList.Add((hour, minute));
+						reader.Read(); // Type
+						System.Enum.TryParse(reader.Value.ToString(), out RestartType restartType);
+						reader.Read(); // Minute Warning
+						int.TryParse(reader.Value.ToString(), out int minuteWarning);
+						RestartData.Data.Add((hour, minute, restartType, minuteWarning));
 					}
 				}
 			}
-
-			return restartDataList;
 		}
 
-		public void SetRestartData(List<(int hour, int minute)> list)
+		public void SetRestartData(List<(int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning)> data)
 		{
-			restartDataList = list;
+			RestartData.Data.Clear();
+			RestartData.Data.AddRange(data);
 			WriteJSON();
 		}
 

@@ -23,6 +23,7 @@ namespace FiveMServerLauncher
 	public partial class MainWindow : Window
 	{
 		private JSONHandler jsonHandler;
+		private RestartData restartData;
 
 		public MainWindow()
 		{
@@ -32,23 +33,39 @@ namespace FiveMServerLauncher
 
 			jsonHandler.SetRestartEnabled(true);
 
-			List<(int hour, int minute)> restartData = new List<(int hour, int minute)>();
-			restartData.Add((6, 00));
-			restartData.Add((12, 00));
-			restartData.Add((18, 00));
-			restartData.Add((00, 00));
-
-			jsonHandler.SetRestartData(restartData);
-
-			foreach ((int hour, int minute) data in jsonHandler.GetRestartData())
+			List<(int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning)> data = new List<(int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning)>
 			{
-				Console.WriteLine("Time - " + data.hour + ":" + data.minute);
+				(6, 00, RestartType.Restart, 5),
+				(12, 00, RestartType.Stop, 10),
+				(18, 00, RestartType.Start, 10),
+				(0, 00, RestartType.Restart, 5),
+			};
+
+			jsonHandler.SetRestartData(data);
+			jsonHandler.SetServerDirectory(@"C:\Users\jacks\Desktop\Additional Folders\TestFile");
+
+			jsonHandler.RestartDataUpdate();
+			restartData = jsonHandler.RestartData;
+
+			foreach ((int RestartHour, int RestartMinute, RestartType RestartType, int MinuteWarning) data_ in restartData.Data)
+			{
+				Console.WriteLine("Restart - " + data_.RestartHour + ":" + data_.RestartMinute + " " + data_.RestartType + " " + data_.MinuteWarning);
 			}
 
-			jsonHandler.SetServerDirectory(@"C:\Users\jacks\Desktop\Additional Folders\TestFile");
 			Console.WriteLine(jsonHandler.GetServerDirectory());
+			Console.WriteLine("Restart Enabled - " + restartData.Enabled);
 
-			Console.WriteLine("Restart Enabled - " + jsonHandler.GetRestartEnabled());
+			RestartControl restartControl = new RestartControl(0, restartData);
+			RestartControlPanel.Children.Add(restartControl);
+
+			RestartControl restartControl1 = new RestartControl(1, restartData);
+			RestartControlPanel.Children.Add(restartControl1);
+
+			RestartControl restartControl2 = new RestartControl(2, restartData);
+			RestartControlPanel.Children.Add(restartControl2);
+
+			RestartControl restartControl3 = new RestartControl(3, restartData);
+			RestartControlPanel.Children.Add(restartControl3);
 		}
 	}
 }

@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <ScrollViewer HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="185">
+            <StackPanel x:Name="RestartControlPanel" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
+        </ScrollViewer>
+
     </Grid>
 </Window>
