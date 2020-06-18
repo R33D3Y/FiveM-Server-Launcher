@@ -5,31 +5,88 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FiveMServerLauncher"
         mc:Ignorable="d"
-        Title="FiveM Server Launcher" Height="600" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="FiveM Server Launcher" Height="696" Width="826" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF2D2D30" Closing="Window_Closing" WindowStyle="None">
+    <Window.Resources>
+        <Storyboard x:Key="sbShowLeftMenu" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="-191,40,0,0" To="0,40,0,0" DecelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideLeftMenu">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,40,0,0" To="-191,40,0,0" AccelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+    </Window.Resources>
+
     <Grid>
-        <ScrollViewer HorizontalAlignment="Left" Height="510" Margin="10,10,0,0" VerticalAlignment="Top" Width="185">
-            <StackPanel x:Name="RestartControlPanel" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
-        </ScrollViewer>
-        <Button x:Name="button" HorizontalAlignment="Left" Margin="165,525,0,0" VerticalAlignment="Top" Width="30" Height="30" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="Button_Click">
+        <Button x:Name="buttonClose" HorizontalAlignment="Left" Margin="776,4,0,0" VerticalAlignment="Top" Width="35" Height="35" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="ButtonClose_Click" BorderBrush="{x:Null}" Foreground="{x:Null}">
             <Button.Background>
-                <ImageBrush ImageSource="addIcon.png"/>
+                <ImageBrush ImageSource="closeIcon.png"/>
             </Button.Background>
         </Button>
-        <CheckBox x:Name="checkBoxRestartSchedule" Content="Restart Schedule" HorizontalAlignment="Left" Margin="33,532,0,0" VerticalAlignment="Top" Checked="CheckBoxRestartSchedule_Checked" Unchecked="CheckBoxRestartSchedule_Checked"/>
+        <Button x:Name="buttonMinimise" HorizontalAlignment="Left" Margin="738,5,0,0" VerticalAlignment="Top" Width="33" Height="33" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="ButtonMinimise_Click" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="minusIcon.png"/>
+            </Button.Background>
+        </Button>
 
-        <RichTextBox x:Name="consoleTextbox" HorizontalAlignment="Left" Height="471" Margin="200,10,0,0" VerticalAlignment="Top" Width="773" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleTextbox_TextChanged" IsReadOnly="True" Background="#FFDDDDDD">
+        <StackPanel Panel.ZIndex="2" Name="pnlLeftMenu" Orientation="Horizontal" VerticalAlignment="Top" Height="575" Margin="-191,40,0,0">
+            <Border Width="190">
+                <TabControl x:Name="tabControl" TabStripPlacement="Top" Background="#FF252526">
+                    <TabItem Header="Restarts">
+                        <TabPanel>
+                            <ScrollViewer HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="185" Background="#FF252526">
+                                <StackPanel x:Name="RestartControlPanel" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
+                            </ScrollViewer>
+                            <CheckBox x:Name="checkBoxRestartSchedule" Content="Restart Schedule" Checked="CheckBoxRestartSchedule_Checked" Unchecked="CheckBoxRestartSchedule_Checked" Foreground="#FFF1F1F1" BorderBrush="#FF999999" Margin="10,10,8,482"/>
+                            <Button x:Name="button" Width="30" Height="30" Cursor="Hand" Click="Button_Click" Margin="22,4,1,476">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="addIcon.png"/>
+                                </Button.Background>
+                            </Button>
+                        </TabPanel>
+                    </TabItem>
+                    <TabItem Header="CMD/Node Scripts">
+
+                    </TabItem>
+                </TabControl>
+
+            </Border>
+            <Grid>
+                <Button Name="btnLeftMenuHide" Margin="-105,0,0,0" Width="250" Height="30" Click="BtnLeftMenuHide_Click" Content="Hide Restart Schedule &amp; CMD/Node Script" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
+                <Button Name="btnLeftMenuShow" Margin="-105,0,0,0" Width="250" Height="30" Click="BtnLeftMenuShow_Click" Content="Show Restart Schedule &amp; CMD/Node Script" RenderTransformOrigin="0.5,0.5" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
+            </Grid>
+        </StackPanel>
+
+
+
+        <RichTextBox x:Name="consoleTextbox" HorizontalAlignment="Left" Height="572" Margin="39,43,0,0" VerticalAlignment="Top" Width="773" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleTextbox_TextChanged" IsReadOnly="True" Background="#FF252526">
             <FlowDocument PageWidth="10000" LineHeight="3">
                 <Paragraph>
                     <Run Text=""/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Label x:Name="label_Copy" Content="Commands" HorizontalAlignment="Left" Margin="201,486,0,0" VerticalAlignment="Top" Height="34" Width="71" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="inputText" HorizontalAlignment="Left" Height="24" Margin="277,493,0,0" VerticalAlignment="Top" Width="581" VerticalContentAlignment="Center" KeyDown="InputText_KeyDown"/>
-        <Button x:Name="submitInput" Content="Submit" HorizontalAlignment="Left" Margin="863,493,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="SubmitInput_Click"/>
-        <Button x:Name="startServer" Content="Start" HorizontalAlignment="Left" Margin="201,530,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="StartServer_Click"/>
-        <Button x:Name="stopServer" Content="Stop" HorizontalAlignment="Left" Margin="431,530,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="StopServer_Click"/>
-        <Button x:Name="restartServer" Content="Restart Now" HorizontalAlignment="Left" Margin="316,530,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="RestartServer_Click"/>
-
+        <Label x:Name="label_Copy" Content="Commands" HorizontalAlignment="Left" Margin="39,620,0,0" VerticalAlignment="Top" Height="34" Width="71" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FFF1F1F1"/>
+        <TextBox x:Name="inputText" HorizontalAlignment="Left" Height="24" Margin="115,627,0,0" VerticalAlignment="Top" Width="581" VerticalContentAlignment="Center" KeyDown="InputText_KeyDown" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+        <Button x:Name="submitInput" Content="Submit" HorizontalAlignment="Left" Margin="701,627,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="SubmitInput_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
+        <Button x:Name="startServer" Content="Start" HorizontalAlignment="Left" Margin="39,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="StartServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
+        <Button x:Name="stopServer" Content="Stop" HorizontalAlignment="Left" Margin="269,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="StopServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
+        <Button x:Name="restartServer" Content="Restart Now" HorizontalAlignment="Left" Margin="154,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="RestartServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
     </Grid>
 </Window>

@@ -13,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -32,10 +33,10 @@ namespace FiveMServerLauncher
 		private readonly DispatcherTimer RestartScheduler = new DispatcherTimer();
 
 		private Process serverProcess;
-		private List<Process> nodeProcesses = new List<Process>();
+		private readonly List<Process> nodeProcesses = new List<Process>();
 
 		private string logFileLocation = "";
-		private bool closing = false;
+		private readonly bool closing = false;
 
 		public MainWindow()
 		{
@@ -171,6 +172,7 @@ namespace FiveMServerLauncher
 			if (serverProcess != null && !serverProcess.HasExited)
 			{
 				serverProcess.Kill();
+				serverProcess = null;
 			}
 
 			foreach (Process process in nodeProcesses)
@@ -324,7 +326,7 @@ namespace FiveMServerLauncher
 				return Brushes.Cyan;
 			}
 
-			return Brushes.Black;
+			return Brushes.White;
 		}
 
 		private string RemoveColourNotifier(string str)
@@ -446,6 +448,60 @@ namespace FiveMServerLauncher
 		private void StopServer_Click(object sender, RoutedEventArgs e)
 		{
 			Stop();
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (serverProcess != null)
+			{
+				MessageBoxResult msgResult = System.Windows.MessageBox.Show("The Server Is Still Running, Are You Sure?", "FiveM Server Launcher", MessageBoxButton.YesNo, (MessageBoxImage)MessageBoxIcon.Error);
+
+				if (msgResult == MessageBoxResult.Yes)
+				{
+					Stop();
+				}
+				else
+				{
+					e.Cancel = true;
+				}
+			}
+		}
+
+		private void ButtonMinimise_Click(object sender, RoutedEventArgs e)
+		{
+			WindowState = WindowState.Minimized;
+		}
+
+		private void ButtonClose_Click(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+
+		private void BtnLeftMenuHide_Click(object sender, RoutedEventArgs e)
+		{
+			ShowHideMenu("sbHideLeftMenu", btnLeftMenuHide, btnLeftMenuShow, pnlLeftMenu);
+		}
+
+		private void BtnLeftMenuShow_Click(object sender, RoutedEventArgs e)
+		{
+			ShowHideMenu("sbShowLeftMenu", btnLeftMenuHide, btnLeftMenuShow, pnlLeftMenu);
+		}
+
+		private void ShowHideMenu(string board, System.Windows.Controls.Button btnHide, System.Windows.Controls.Button btnShow, StackPanel pnl)
+		{
+			var sb = Resources[board] as Storyboard;
+			sb.Begin(pnl);
+
+			if (board.Contains("Show"))
+			{
+				btnHide.Visibility = System.Windows.Visibility.Visible;
+				btnShow.Visibility = System.Windows.Visibility.Hidden;
+			}
+			else if (board.Contains("Hide"))
+			{
+				btnHide.Visibility = System.Windows.Visibility.Hidden;
+				btnShow.Visibility = System.Windows.Visibility.Visible;
+			}
 		}
 
 		#endregion Event Handlers

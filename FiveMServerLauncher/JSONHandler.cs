@@ -9,12 +9,12 @@ namespace FiveMServerLauncher
 {
 	public class JSONHandler
 	{
-		private string path;
-		private string jsonPath;
+		//private readonly string path;
+		private readonly string jsonPath;
 
 		public JSONHandler(string launcherDir)
 		{
-			path = launcherDir;
+			//path = launcherDir;
 			jsonPath = launcherDir + @"\config.json";
 		}
 
