@@ -35,6 +35,7 @@ namespace FiveMServerLauncher
 		private List<Process> nodeProcesses = new List<Process>();
 
 		private string logFileLocation = "";
+		private bool closing = false;
 
 		public MainWindow()
 		{
@@ -60,35 +61,46 @@ namespace FiveMServerLauncher
 			jsonHandler.RestartDataUpdate();
 			restartInformation = jsonHandler.RestartInformation;
 
-			while (jsonHandler.GetServerDirectory() == "")
+			while (jsonHandler.GetServerDirectory() == null || jsonHandler.GetServerDirectory() == "")
 			{
+				MessageBoxResult msgResult = System.Windows.MessageBox.Show("Please Select The Server Directory", "FiveM Server Launcher", MessageBoxButton.OKCancel, (MessageBoxImage)MessageBoxIcon.Error);
+
+				if (msgResult == MessageBoxResult.Cancel)
+				{
+					closing = true;
+					Close();
+					break;
+				}
+
 				using (var dialog = new FolderBrowserDialog())
 				{
 					DialogResult result = dialog.ShowDialog();
 					jsonHandler.SetServerDirectory(dialog.SelectedPath);
 				}
+			}
 
-				if (jsonHandler.GetServerDirectory() == "")
+			if (!closing)
+			{
+				while (jsonHandler.GetServerConfigDirectory() == null || jsonHandler.GetServerConfigDirectory() == "")
 				{
-					MessageBoxResult result = System.Windows.MessageBox.Show("Please Select The Server Directory", "FiveM Server Launcher", MessageBoxButton.OKCancel, (MessageBoxImage)MessageBoxIcon.Error);
+					MessageBoxResult msgResult = System.Windows.MessageBox.Show("Please Select The Server Config Directory", "FiveM Server Launcher", MessageBoxButton.OKCancel, (MessageBoxImage)MessageBoxIcon.Error);
 
-					if (result == MessageBoxResult.Cancel)
+					if (msgResult == MessageBoxResult.Cancel)
 					{
+						closing = true;
 						Close();
 						break;
 					}
+
+					using (var dialog = new OpenFileDialog())
+					{
+						DialogResult result = dialog.ShowDialog();
+						jsonHandler.SetServerConfigDirectory(dialog.FileName);
+					}
 				}
+				
+				CreateRestartControls();
 			}
-
-			//foreach (RestartData data_ in restartInformation.Data)
-			//{
-			//	Console.WriteLine("Restart - " + data_.RestartHour + ":" + data_.RestartMinute + " " + data_.RestartType + " " + data_.MinuteWarning);
-			//}
-
-			//Console.WriteLine(jsonHandler.GetServerDirectory());
-			//Console.WriteLine("Restart Enabled - " + restartInformation.Enabled);
-
-			CreateRestartControls();
 		}
 
 		private void CreateRestartControls()
@@ -124,7 +136,7 @@ namespace FiveMServerLauncher
 				RedirectStandardInput = true,
 				RedirectStandardError = true,
 				UseShellExecute = false,
-				Arguments = "+exec server.cfg"
+				Arguments = "+exec " + jsonHandler.GetServerConfigDirectory()
 			};
 
 			//ProcessStartInfo startServerVerificationInfo = new ProcessStartInfo("cmd.exe")

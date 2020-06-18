@@ -31,6 +31,9 @@ namespace FiveMServerLauncher
 				writer.WritePropertyName("Server Directory");
 				writer.WriteValue(serverDirectory);
 
+				writer.WritePropertyName("Server Config Directory");
+				writer.WriteValue(serverConfigDirectory);
+
 				writer.WritePropertyName("Restart Enabled");
 				writer.WriteValue(RestartInformation.Enabled);
 
@@ -154,7 +157,11 @@ namespace FiveMServerLauncher
 					if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString().StartsWith("Server Directory"))
 					{
 						reader.Read(); // Property Name
-						serverDirectory = reader.Value.ToString();
+
+						if (reader.Value != null)
+						{
+							serverDirectory = reader.Value.ToString();
+						}
 					}
 				}
 			}
@@ -176,6 +183,44 @@ namespace FiveMServerLauncher
 		}
 
 		#endregion Server Directory
+
+		#region Server Config Directory
+
+		private string serverConfigDirectory;
+
+		public string GetServerConfigDirectory()
+		{
+			JsonTextReader reader = new JsonTextReader(new StringReader(File.ReadAllText(jsonPath)));
+
+			while (reader.Read())
+			{
+				if (reader.Value != null)
+				{
+					if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString().StartsWith("Server Config Directory"))
+					{
+						reader.Read(); // Property Name
+
+						if (reader.Value != null)
+						{
+							serverConfigDirectory = reader.Value.ToString();
+						}
+					}
+				}
+			}
+
+			return serverConfigDirectory;
+		}
+
+		public void SetServerConfigDirectory(string p)
+		{
+			if (File.Exists(p))
+			{
+				serverConfigDirectory = p;
+				WriteJSON();
+			}
+		}
+
+		#endregion Server Config Directory
 
 		#region Log Directory
 
