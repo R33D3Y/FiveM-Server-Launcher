@@ -40,6 +40,8 @@ namespace FiveMServerLauncher
 		{
 			InitializeComponent();
 
+			jsonHandler = new JSONHandler(Directory.GetCurrentDirectory());
+
 			UIUpdater.Interval = TimeSpan.FromSeconds(0.5);
 			UIUpdater.Tick += UIUpdater_Tick;
 			UIUpdater.Start();
@@ -47,8 +49,6 @@ namespace FiveMServerLauncher
 			RestartScheduler.Interval = TimeSpan.FromSeconds(60);
 			RestartScheduler.Tick += RestartScheduler_Tick;
 			RestartScheduler.Start();
-
-			jsonHandler = new JSONHandler(Directory.GetCurrentDirectory());
 
 			//jsonHandler.SetRestartEnabled(true);
 			//jsonHandler.AddRestartData(new RestartData(6, 00, RestartType.Restart, 5));

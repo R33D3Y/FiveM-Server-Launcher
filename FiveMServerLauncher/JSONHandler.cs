@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Threading;
 
 namespace FiveMServerLauncher
 {
@@ -164,9 +166,13 @@ namespace FiveMServerLauncher
 
 		public void SetServerDirectory(string p)
 		{
-			serverDirectory = p;
-			LogDirectory = serverDirectory + @"\LogFiles\";
-			WriteJSON();
+			if (Directory.Exists(p))
+			{
+				serverDirectory = p;
+				LogDirectory = serverDirectory + @"\LogFiles\";
+				Directory.CreateDirectory(LogDirectory);
+				WriteJSON();
+			}
 		}
 
 		#endregion Server Directory
