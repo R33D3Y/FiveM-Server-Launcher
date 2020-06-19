@@ -4,22 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FiveMServerLauncher"
-             mc:Ignorable="d" Height="102.417" Foreground="#FF252526" Background="#FF252526" BorderBrush="#FF434346" BorderThickness="1">
-    <Grid Width="162" Margin="0,6,0,-3">
-        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,0,0,0" Foreground="#FFF1F1F1"/>
+             mc:Ignorable="d" Height="100" Foreground="#FF252526" Background="#FF252526" BorderBrush="#FF434346" BorderThickness="1" Width="270
+             ">
+    <Grid>
+        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Foreground="#FFF1F1F1"/>
 
-        <Label x:Name="labelTime" Content="Time" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="114,24,0,0" Foreground="#FFF1F1F1"/>
-        <ComboBox x:Name="comboBoxHour" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="4,26,0,0" SelectionChanged="ComboBoxHour_SelectionChanged" Background="#FF333337" BorderBrush="#FF434346"/>
-        <ComboBox x:Name="comboBoxMinute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="59,26,0,0" SelectionChanged="ComboBoxMinute_SelectionChanged" Background="#FF333337" BorderBrush="#FF434346"/>
+        <Label x:Name="labelTime" Content="Time" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,39,0,0" Foreground="#FFF1F1F1"/>
+        <ComboBox x:Name="comboBoxHour" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="10,41,0,0" SelectionChanged="ComboBoxHour_SelectionChanged" Background="#FF333337" BorderBrush="#FF434346"/>
+        <ComboBox x:Name="comboBoxMinute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="65,41,0,0" SelectionChanged="ComboBoxMinute_SelectionChanged" Background="#FF333337" BorderBrush="#FF434346"/>
 
-        <RadioButton x:Name="radioButtonStop" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="111,49,0,0" Checked="RadioButton_Checked" Foreground="#FFF1F1F1"/>
-        <RadioButton x:Name="radioButtonRestart" Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="52,49,0,0" Checked="RadioButton_Checked" Foreground="#FFF1F1F1"/>
-        <RadioButton x:Name="radioButtonStart" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,49,0,0" Checked="RadioButton_Checked" Foreground="#FFF1F1F1"/>
+        <RadioButton x:Name="radioButtonStop" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="171,65,0,0" Checked="RadioButton_Checked" Foreground="#FFF1F1F1"/>
+        <RadioButton x:Name="radioButtonRestart" Content="Restart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="171,45,0,0" Checked="RadioButton_Checked" Foreground="#FFF1F1F1"/>
+        <RadioButton x:Name="radioButtonStart" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="171,25,0,0" Checked="RadioButton_Checked" Foreground="#FFF1F1F1"/>
 
-        <Label x:Name="labelWarning" Content="Server Warning" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="59,64,0,0" Foreground="#FFF1F1F1"/>
-        <ComboBox x:Name="comboBoxWarningMinute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="4,66,0,0" SelectionChanged="ComboBoxWarningMinute_SelectionChanged" Background="#FF333337" BorderBrush="#FF434346"/>
+        <Label x:Name="labelWarning" Content="Server Warning" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="65,65,0,0" Foreground="#FFF1F1F1"/>
+        <ComboBox x:Name="comboBoxWarningMinute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="10,68,0,0" SelectionChanged="ComboBoxWarningMinute_SelectionChanged" Background="#FF333337" BorderBrush="#FF434346"/>
 
-        <Button x:Name="button" HorizontalAlignment="Left" Margin="136,1,0,0" VerticalAlignment="Top" Width="25" Height="25" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="Button_Click" BorderBrush="{x:Null}" Foreground="{x:Null}">
+        <Button x:Name="button" HorizontalAlignment="Left" Margin="234,10,0,0" VerticalAlignment="Top" Width="24" Height="25" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="Button_Click" BorderBrush="{x:Null}" Foreground="{x:Null}">
             <Button.Background>
                 <ImageBrush ImageSource="closeIcon.png"/>
             </Button.Background>

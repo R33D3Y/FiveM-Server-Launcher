@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+
+//C:\xampp\mysql\bin\mysqldump.exe db1 -h localhost -u user1 -pPassWord1 > C:\backups\db1-%date%.sql
 
 namespace FiveMServerLauncher
 {
@@ -28,6 +23,7 @@ namespace FiveMServerLauncher
 	{
 		private readonly JSONHandler jsonHandler;
 		private readonly RestartInformation restartInformation;
+		private readonly NodeCMDInformation nodeCMDInformation;
 
 		private readonly DispatcherTimer UIUpdater = new DispatcherTimer();
 		private readonly DispatcherTimer RestartScheduler = new DispatcherTimer();
@@ -44,23 +40,10 @@ namespace FiveMServerLauncher
 
 			jsonHandler = new JSONHandler(Directory.GetCurrentDirectory());
 
-			UIUpdater.Interval = TimeSpan.FromSeconds(0.5);
-			UIUpdater.Tick += UIUpdater_Tick;
-			UIUpdater.Start();
-
-			RestartScheduler.Interval = TimeSpan.FromSeconds(60);
-			RestartScheduler.Tick += RestartScheduler_Tick;
-			RestartScheduler.Start();
-
-			//jsonHandler.SetRestartEnabled(true);
-			//jsonHandler.AddRestartData(new RestartData(6, 00, RestartType.Restart, 5));
-			//jsonHandler.AddRestartData(new RestartData(12, 00, RestartType.Stop, 10));
-			//jsonHandler.AddRestartData(new RestartData(18, 00, RestartType.Start, 10));
-			//jsonHandler.AddRestartData(new RestartData(0, 00, RestartType.Restart, 5));
-			//jsonHandler.SetServerDirectory(@"C:\Users\jacks\Desktop\Additional Folders\TestFile");
-
 			jsonHandler.RestartDataUpdate();
+			jsonHandler.NodeCMDUpdate();
 			restartInformation = jsonHandler.RestartInformation;
+			nodeCMDInformation = jsonHandler.NodeCMDInformation;
 
 			while (jsonHandler.GetServerDirectory() == null || jsonHandler.GetServerDirectory() == "")
 			{
@@ -99,8 +82,17 @@ namespace FiveMServerLauncher
 						jsonHandler.SetServerConfigDirectory(dialog.FileName);
 					}
 				}
-				
+
 				CreateRestartControls();
+				CreateNodeCMDControls();
+
+				UIUpdater.Interval = TimeSpan.FromSeconds(0.5);
+				UIUpdater.Tick += UIUpdater_Tick;
+				UIUpdater.Start();
+
+				RestartScheduler.Interval = TimeSpan.FromSeconds(60);
+				RestartScheduler.Tick += RestartScheduler_Tick;
+				RestartScheduler.Start();
 			}
 		}
 
@@ -117,16 +109,26 @@ namespace FiveMServerLauncher
 			}
 		}
 
+		private void CreateNodeCMDControls()
+		{
+			int count = 0;
+			CMDNodeControlPanel.Children.Clear();
+
+			foreach (NodeCMD nodeCMD in nodeCMDInformation.Data)
+			{
+				CMDNodeControlPanel.Children.Add(new NodeCMDControl(count, nodeCMDInformation.Data[count], jsonHandler));
+				count++;
+			}
+		}
+
 		#region Server
 
 		private void Start()
 		{
-			//startServer.IsEnabled = false;
 			DecideLogLocation();
 			ResetConsole();
 
 			serverProcess = new Process();
-			//serverVerification = new Process();
 
 			string file = jsonHandler.GetServerDirectory() + @"\run.cmd";
 			ProcessStartInfo startFiveMInfo = new ProcessStartInfo(file)
@@ -140,25 +142,27 @@ namespace FiveMServerLauncher
 				Arguments = "+exec " + jsonHandler.GetServerConfigDirectory()
 			};
 
-			//ProcessStartInfo startServerVerificationInfo = new ProcessStartInfo("cmd.exe")
-			//{
-			//	CreateNoWindow = true,
-			//	UseShellExecute = false,
-			//	Arguments = @"/C cd " + jsonHandler.GetServerDirectory() + @"\discordBots\Verifier\SkayVerifier-Discord && node main.js"
-			//};
-
 			serverProcess.StartInfo = startFiveMInfo;
 			serverProcess.OutputDataReceived += (s, a) => Output_Data(s, a);
 			serverProcess.Start();
 			serverProcess.BeginOutputReadLine();
 
-			//serverVerification.StartInfo = startServerVerificationInfo;
-			//serverVerification.Start();
+			foreach (NodeCMD nodeCMD in nodeCMDInformation.Data)
+			{
+				Process temp = new Process();
 
-			//restartServer.IsEnabled = true;
-			//stopServer.IsEnabled = true;
-			//submitInput.IsEnabled = true;
-			//inputText.IsEnabled = true;
+				ProcessStartInfo tempInfo = new ProcessStartInfo("cmd.exe")
+				{
+					CreateNoWindow = true,
+					UseShellExecute = false,
+					Arguments = @"/C cd " + nodeCMD.Directory + @" && " + nodeCMD.Arguments
+				};
+
+				temp.StartInfo = tempInfo;
+				temp.Start();
+
+				nodeProcesses.Add(temp);
+			}
 		}
 
 		private void Restart()
@@ -177,7 +181,11 @@ namespace FiveMServerLauncher
 
 			foreach (Process process in nodeProcesses)
 			{
-				process.Kill();
+				try
+				{
+					process.Kill();
+				}
+				catch (Exception) { }
 			}
 
 			foreach (var process in Process.GetProcessesByName("FXServer"))
@@ -348,6 +356,7 @@ namespace FiveMServerLauncher
 			if (jsonHandler.UpdateUI)
 			{
 				CreateRestartControls();
+				CreateNodeCMDControls();
 				jsonHandler.UpdateUI = false;
 			}
 		}
@@ -403,7 +412,7 @@ namespace FiveMServerLauncher
 
 		#endregion Dispatch Ticks
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void ButtonAddRestartSchedule_Click(object sender, RoutedEventArgs e)
 		{
 			jsonHandler.AddRestartData(new RestartData(0, 0, RestartType.Restart, 0));
 			CreateRestartControls();
@@ -477,6 +486,15 @@ namespace FiveMServerLauncher
 			Close();
 		}
 
+		private void ButtonAddCMDNode_Click(object sender, RoutedEventArgs e)
+		{
+			jsonHandler.NodeCMDInformation.Data.Add(new NodeCMD(true, "", ""));
+			CreateRestartControls();
+			CreateNodeCMDControls();
+		}
+
+		#region Sliding Panel
+
 		private void BtnLeftMenuHide_Click(object sender, RoutedEventArgs e)
 		{
 			ShowHideMenu("sbHideLeftMenu", btnLeftMenuHide, btnLeftMenuShow, pnlLeftMenu);
@@ -487,6 +505,16 @@ namespace FiveMServerLauncher
 			ShowHideMenu("sbShowLeftMenu", btnLeftMenuHide, btnLeftMenuShow, pnlLeftMenu);
 		}
 
+		private void BtnRightMenuHide_Click(object sender, RoutedEventArgs e)
+		{
+			ShowHideMenu("sbHideRightMenu", btnRightMenuHide, btnRightMenuShow, pnlRightMenu);
+		}
+
+		private void BtnRightMenuShow_Click(object sender, RoutedEventArgs e)
+		{
+			ShowHideMenu("sbShowRightMenu", btnRightMenuHide, btnRightMenuShow, pnlRightMenu);
+		}
+
 		private void ShowHideMenu(string board, System.Windows.Controls.Button btnHide, System.Windows.Controls.Button btnShow, StackPanel pnl)
 		{
 			var sb = Resources[board] as Storyboard;
@@ -494,15 +522,17 @@ namespace FiveMServerLauncher
 
 			if (board.Contains("Show"))
 			{
-				btnHide.Visibility = System.Windows.Visibility.Visible;
-				btnShow.Visibility = System.Windows.Visibility.Hidden;
+				btnHide.Visibility = Visibility.Visible;
+				btnShow.Visibility = Visibility.Hidden;
 			}
 			else if (board.Contains("Hide"))
 			{
-				btnHide.Visibility = System.Windows.Visibility.Hidden;
-				btnShow.Visibility = System.Windows.Visibility.Visible;
+				btnHide.Visibility = Visibility.Hidden;
+				btnShow.Visibility = Visibility.Visible;
 			}
 		}
+
+		#endregion Sliding Panel
 
 		#endregion Event Handlers
 	}

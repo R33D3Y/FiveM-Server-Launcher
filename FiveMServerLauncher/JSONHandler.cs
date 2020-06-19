@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Windows.Threading;
+using System.Threading;
 
 namespace FiveMServerLauncher
 {
@@ -16,6 +14,11 @@ namespace FiveMServerLauncher
 		{
 			//path = launcherDir;
 			jsonPath = launcherDir + @"\config.json";
+
+			if (!File.Exists(jsonPath))
+			{
+				WriteJSON();
+			}
 		}
 
 		private void WriteJSON()
@@ -52,6 +55,20 @@ namespace FiveMServerLauncher
 					count++;
 				}
 
+				count = 0;
+
+				foreach (NodeCMD data in NodeCMDInformation.Data)
+				{
+					writer.WritePropertyName("NodeCMD " + count);
+					writer.WriteStartArray();
+					writer.WriteValue(data.Directory);
+					writer.WriteValue(data.Arguments);
+					writer.WriteValue(data.Enabled);
+					writer.WriteEnd();
+
+					count++;
+				}
+
 				writer.WriteEndObject();
 			}
 
@@ -64,6 +81,60 @@ namespace FiveMServerLauncher
 		}
 
 		public bool UpdateUI { get; set; }
+
+		public NodeCMDInformation NodeCMDInformation { get; private set; } = new NodeCMDInformation();
+
+		public void NodeCMDUpdate()
+		{
+			GetNodeCMD();
+		}
+
+		#region Node CMD
+
+		private void GetNodeCMD()
+		{
+			JsonTextReader reader = new JsonTextReader(new StringReader(File.ReadAllText(jsonPath)));
+			NodeCMDInformation.Data.Clear();
+
+			while (reader.Read())
+			{
+				if (reader.Value != null)
+				{
+					if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString().StartsWith("NodeCMD"))
+					{
+						string dir = null;
+						string arg = null;
+						bool enab = false;
+
+						reader.Read(); // Start Data
+						reader.Read(); // NodeCMD Directory
+
+						if (reader.Value != null)
+						{
+							dir = reader.Value.ToString();
+						}
+
+						reader.Read(); // NodeCMD Arguments
+
+						if (reader.Value != null)
+						{
+							arg = reader.Value.ToString();
+						}
+
+						reader.Read(); // NodeCMD Enabled
+
+						if (reader.Value != null)
+						{
+							bool.TryParse(reader.Value.ToString(), out enab);
+						}
+
+						NodeCMDInformation.Data.Add(new NodeCMD(enab, dir, arg));
+					}
+				}
+			}
+		}
+
+		#endregion Node CMD
 
 		public RestartInformation RestartInformation { get; private set; } = new RestartInformation();
 

@@ -136,10 +136,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppToken.cs" />
+    <Compile Include="NodeCMD.cs" />
+    <Compile Include="NodeCMDControl.xaml.cs">
+      <DependentUpon>NodeCMDControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RestartControl.xaml.cs">
       <DependentUpon>RestartControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="RestartData.cs" />
+    <Compile Include="NodeCMDInformation.cs" />
     <Compile Include="RestartInformation.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -154,6 +159,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NodeCMDControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="RestartControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
