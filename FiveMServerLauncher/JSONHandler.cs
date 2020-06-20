@@ -40,6 +40,17 @@ namespace FiveMServerLauncher
 				writer.WritePropertyName("Restart Enabled");
 				writer.WriteValue(RestartInformation.Enabled);
 
+				writer.WritePropertyName("SQL Backup");
+				writer.WriteStartArray();
+				writer.WriteValue(SQLBackup.Enabled);
+				writer.WriteValue(SQLBackup.DumpDirectory);
+				writer.WriteValue(SQLBackup.DatabaseName);
+				writer.WriteValue(SQLBackup.Host);
+				writer.WriteValue(SQLBackup.User);
+				writer.WriteValue(SQLBackup.Password);
+				writer.WriteValue(SQLBackup.BackupDirectory);
+				writer.WriteEnd();
+
 				int count = 0;
 
 				foreach (RestartData data in RestartInformation.Data)
@@ -81,6 +92,82 @@ namespace FiveMServerLauncher
 		}
 
 		public bool UpdateUI { get; set; }
+
+		public SQLBackup SQLBackup { get; private set; } = new SQLBackup(false, "", "", "", "", "", "");
+
+		public void SQLBackupUpdate()
+		{
+			GetSQLBackup();
+		}
+
+		#region SQL Backup
+
+		private void GetSQLBackup()
+		{
+			JsonTextReader reader = new JsonTextReader(new StringReader(File.ReadAllText(jsonPath)));
+			NodeCMDInformation.Data.Clear();
+
+			while (reader.Read())
+			{
+				if (reader.Value != null)
+				{
+					if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString().StartsWith("SQL Backup"))
+					{
+						reader.Read(); // Start Data
+						reader.Read(); // SQL Backup Enabled
+
+						if (reader.Value != null)
+						{
+							bool.TryParse(reader.Value.ToString(), out SQLBackup.Enabled);
+						}
+
+						reader.Read(); // SQL Dump Directory
+
+						if (reader.Value != null)
+						{
+							SQLBackup.DumpDirectory = reader.Value.ToString();
+						}
+
+						reader.Read(); // Database Name
+
+						if (reader.Value != null)
+						{
+							SQLBackup.DatabaseName = reader.Value.ToString();
+						}
+
+						reader.Read(); // Host
+
+						if (reader.Value != null)
+						{
+							SQLBackup.Host = reader.Value.ToString();
+						}
+
+						reader.Read(); // User
+
+						if (reader.Value != null)
+						{
+							SQLBackup.User = reader.Value.ToString();
+						}
+
+						reader.Read(); // Password
+
+						if (reader.Value != null)
+						{
+							SQLBackup.Password = reader.Value.ToString();
+						}
+
+						reader.Read(); // Backup Directory
+
+						if (reader.Value != null)
+						{
+							SQLBackup.BackupDirectory = reader.Value.ToString();
+						}
+					}
+				}
+			}
+		}
+
+		#endregion SQL Backup
 
 		public NodeCMDInformation NodeCMDInformation { get; private set; } = new NodeCMDInformation();
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FiveMServerLauncher"
         mc:Ignorable="d"
-        Title="FiveM Server Launcher" Height="696" Width="859" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF2D2D30" Closing="Window_Closing" WindowStyle="None">
+        Title="FiveM Server Launcher" Height="696" Width="859" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF2D2D30" Closing="Window_Closing" WindowStyle="None" MouseDown="Window_MouseDown">
     <Window.Resources>
         <Storyboard x:Key="sbShowLeftMenu">
             <ThicknessAnimation Storyboard.TargetProperty="Margin" From="-281,40,0,0" To="0,40,0,0" DecelerationRatio=".9" Duration="0:0:1" />
@@ -116,21 +116,24 @@
                         <TabPanel>
                             <StackPanel HorizontalAlignment="Left" Height="550" Width="275">
                                 <Label x:Name="label" Content="MySQLDump.exe Directory:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5" />
-                                <TextBox x:Name="textBoxSQLDumpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+                                <TextBox x:Name="textBoxSQLDumpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxSQLDumpDir_LostFocus"/>
 
                                 <Label x:Name="label1" Content="Database Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
-                                <TextBox x:Name="textBoxDatabase" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+                                <TextBox x:Name="textBoxDatabase" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxDatabase_LostFocus"/>
 
-                                <Label x:Name="label2" Content="User:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
-                                <TextBox x:Name="textBoxUser" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+                                <Label x:Name="label2" Content="Host:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
+                                <TextBox x:Name="textBoxHost" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxHost_LostFocus"/>
 
-                                <Label x:Name="label3" Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
-                                <PasswordBox x:Name="textBoxPassword" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+                                <Label x:Name="label3" Content="User:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
+                                <TextBox x:Name="textBoxUser" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxUser_LostFocus"/>
 
-                                <Label x:Name="label4" Content="Backup Directory:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
-                                <TextBox x:Name="textBoxBackUpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+                                <Label x:Name="label4" Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
+                                <PasswordBox x:Name="textBoxPassword" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxPassword_LostFocus"/>
 
-                                <CheckBox x:Name="checkBoxSQLBackUp" Content="Enable SQL Backups" Margin="10,5,10,5" Foreground="#FFF1F1F1"/>
+                                <Label x:Name="label5" Content="Backup Directory:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
+                                <TextBox x:Name="textBoxBackUpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxBackUpDir_LostFocus"/>
+
+                                <CheckBox x:Name="checkBoxSQLBackUp" Content="Enable SQL Backups" Margin="10,5,10,5" Foreground="#FFF1F1F1" Checked="CheckBoxSQLBackUp_Checked"/>
                             </StackPanel>
                         </TabPanel>
                     </TabItem>

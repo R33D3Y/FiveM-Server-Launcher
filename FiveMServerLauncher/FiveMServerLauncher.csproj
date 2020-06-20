@@ -136,6 +136,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppToken.cs" />
+    <Compile Include="SQLBackup.cs" />
     <Compile Include="NodeCMD.cs" />
     <Compile Include="NodeCMDControl.xaml.cs">
       <DependentUpon>NodeCMDControl.xaml</DependentUpon>

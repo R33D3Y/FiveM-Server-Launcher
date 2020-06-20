@@ -12,8 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-//C:\xampp\mysql\bin\mysqldump.exe db1 -h localhost -u user1 -pPassWord1 > C:\backups\db1-%date%.sql
-
 namespace FiveMServerLauncher
 {
 	/// <summary>
@@ -24,6 +22,7 @@ namespace FiveMServerLauncher
 		private readonly JSONHandler jsonHandler;
 		private readonly RestartInformation restartInformation;
 		private readonly NodeCMDInformation nodeCMDInformation;
+		private readonly SQLBackup sqlBackup;
 
 		private readonly DispatcherTimer UIUpdater = new DispatcherTimer();
 		private readonly DispatcherTimer RestartScheduler = new DispatcherTimer();
@@ -40,9 +39,11 @@ namespace FiveMServerLauncher
 
 			jsonHandler = new JSONHandler(Directory.GetCurrentDirectory());
 
+			jsonHandler.SQLBackupUpdate();
 			jsonHandler.RestartDataUpdate();
 			jsonHandler.NodeCMDUpdate();
 
+			sqlBackup = jsonHandler.SQLBackup;
 			restartInformation = jsonHandler.RestartInformation;
 			nodeCMDInformation = jsonHandler.NodeCMDInformation;
 
@@ -84,6 +85,7 @@ namespace FiveMServerLauncher
 					}
 				}
 
+				CreateSQLBackupControl();
 				CreateRestartControls();
 				CreateNodeCMDControls();
 
@@ -95,6 +97,17 @@ namespace FiveMServerLauncher
 				RestartScheduler.Tick += RestartScheduler_Tick;
 				RestartScheduler.Start();
 			}
+		}
+
+		private void CreateSQLBackupControl()
+		{
+			checkBoxSQLBackUp.IsChecked = sqlBackup.Enabled;
+			textBoxSQLDumpDir.Text = sqlBackup.DumpDirectory;
+			textBoxDatabase.Text = sqlBackup.DatabaseName;
+			textBoxHost.Text = sqlBackup.Host;
+			textBoxUser.Text = sqlBackup.User;
+			textBoxPassword.Password = sqlBackup.Password;
+			textBoxBackUpDir.Text = sqlBackup.BackupDirectory;
 		}
 
 		private void CreateRestartControls()
@@ -217,6 +230,28 @@ namespace FiveMServerLauncher
 				}
 			}
 			catch (Exception) { }
+
+			string sqlBackupArgument = @"/C cd " + jsonHandler.SQLBackup.DumpDirectory + " " + jsonHandler.SQLBackup.DatabaseName + " -h " + jsonHandler.SQLBackup.Host + " -u " + jsonHandler.SQLBackup.User;
+
+			if (sqlBackup.Password == null || sqlBackup.Password == "")
+			{
+				sqlBackupArgument += " -p " + jsonHandler.SQLBackup.Password;
+			}
+
+			sqlBackupArgument += " > " + jsonHandler.SQLBackup.BackupDirectory + @"\ " + DateTime.Now.ToString("MM-dd-yyyy HH-mm-ss") + ".sql";
+
+			Process sqlBackupProcess = new Process();
+			ProcessStartInfo sqlBackupInfo = new ProcessStartInfo("cmd.exe")
+			{
+				CreateNoWindow = true,
+				UseShellExecute = false,
+				Arguments = sqlBackupArgument
+			};
+
+			sqlBackupProcess.StartInfo = sqlBackupInfo;
+			sqlBackupProcess.Start();
+
+			//C:\xampp\mysql\bin\mysqldump.exe db1 -h localhost -u user1 -pPassWord1 > C:\backups\db1-%date%.sql
 		}
 
 		private void Output_Data(object sender, DataReceivedEventArgs a)
@@ -352,6 +387,14 @@ namespace FiveMServerLauncher
 		#endregion Server
 
 		#region Event Handlers
+
+		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			if (e.ChangedButton == MouseButton.Left)
+			{
+				DragMove();
+			}
+		}
 
 		#region Dispatch Ticks
 
@@ -537,6 +580,52 @@ namespace FiveMServerLauncher
 		}
 
 		#endregion Sliding Panel
+
+		#region SQL Backup
+
+		private void TextBoxSQLDumpDir_LostFocus(object sender, RoutedEventArgs e)
+		{
+			sqlBackup.DumpDirectory = textBoxSQLDumpDir.Text;
+			jsonHandler.UpdateJSON();
+		}
+
+		private void TextBoxDatabase_LostFocus(object sender, RoutedEventArgs e)
+		{
+			sqlBackup.DatabaseName = textBoxDatabase.Text;
+			jsonHandler.UpdateJSON();
+		}
+
+		private void TextBoxHost_LostFocus(object sender, RoutedEventArgs e)
+		{
+			sqlBackup.Host = textBoxHost.Text;
+			jsonHandler.UpdateJSON();
+		}
+
+		private void TextBoxUser_LostFocus(object sender, RoutedEventArgs e)
+		{
+			sqlBackup.User = textBoxUser.Text;
+			jsonHandler.UpdateJSON();
+		}
+
+		private void TextBoxPassword_LostFocus(object sender, RoutedEventArgs e)
+		{
+			sqlBackup.Password = textBoxPassword.Password;
+			jsonHandler.UpdateJSON();
+		}
+
+		private void TextBoxBackUpDir_LostFocus(object sender, RoutedEventArgs e)
+		{
+			sqlBackup.BackupDirectory = textBoxBackUpDir.Text;
+			jsonHandler.UpdateJSON();
+		}
+
+		private void CheckBoxSQLBackUp_Checked(object sender, RoutedEventArgs e)
+		{
+			sqlBackup.Enabled = (bool)checkBoxSQLBackUp.IsChecked;
+			jsonHandler.UpdateJSON();
+		}
+
+		#endregion SQL Backup
 
 		#endregion Event Handlers
 	}
