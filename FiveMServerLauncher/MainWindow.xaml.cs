@@ -42,6 +42,7 @@ namespace FiveMServerLauncher
 
 			jsonHandler.RestartDataUpdate();
 			jsonHandler.NodeCMDUpdate();
+
 			restartInformation = jsonHandler.RestartInformation;
 			nodeCMDInformation = jsonHandler.NodeCMDInformation;
 
@@ -127,6 +128,7 @@ namespace FiveMServerLauncher
 		{
 			DecideLogLocation();
 			ResetConsole();
+			nodeProcesses.Clear();
 
 			serverProcess = new Process();
 
@@ -150,7 +152,6 @@ namespace FiveMServerLauncher
 			foreach (NodeCMD nodeCMD in nodeCMDInformation.Data)
 			{
 				Process temp = new Process();
-
 				ProcessStartInfo tempInfo = new ProcessStartInfo("cmd.exe")
 				{
 					CreateNoWindow = true,
@@ -183,7 +184,10 @@ namespace FiveMServerLauncher
 			{
 				try
 				{
-					process.Kill();
+					if (!process.HasExited)
+					{
+						process.Kill();
+					}
 				}
 				catch (Exception) { }
 			}

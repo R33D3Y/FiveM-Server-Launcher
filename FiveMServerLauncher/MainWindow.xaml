@@ -112,11 +112,26 @@
             </Grid>
             <Border Width="280">
                 <TabControl x:Name="tabControlRight" TabStripPlacement="Top" Background="#FF252526">
-                    <TabItem Header="SQL Backups">
+                    <TabItem Header="SQL Backups" Background="#FF252526">
                         <TabPanel>
-                            <ScrollViewer HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="280" Background="#FF252526">
-                                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
-                            </ScrollViewer>
+                            <StackPanel HorizontalAlignment="Left" Height="550" Width="275">
+                                <Label x:Name="label" Content="MySQLDump.exe Directory:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5" />
+                                <TextBox x:Name="textBoxSQLDumpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+
+                                <Label x:Name="label1" Content="Database Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
+                                <TextBox x:Name="textBoxDatabase" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+
+                                <Label x:Name="label2" Content="User:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
+                                <TextBox x:Name="textBoxUser" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+
+                                <Label x:Name="label3" Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
+                                <PasswordBox x:Name="textBoxPassword" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+
+                                <Label x:Name="label4" Content="Backup Directory:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
+                                <TextBox x:Name="textBoxBackUpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
+
+                                <CheckBox x:Name="checkBoxSQLBackUp" Content="Enable SQL Backups" Margin="10,5,10,5" Foreground="#FFF1F1F1"/>
+                            </StackPanel>
                         </TabPanel>
                     </TabItem>
                 </TabControl>
