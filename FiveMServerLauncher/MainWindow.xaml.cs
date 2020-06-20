@@ -231,14 +231,14 @@ namespace FiveMServerLauncher
 			}
 			catch (Exception) { }
 
-			string sqlBackupArgument = @"/C cd " + jsonHandler.SQLBackup.DumpDirectory + " " + jsonHandler.SQLBackup.DatabaseName + " -h " + jsonHandler.SQLBackup.Host + " -u " + jsonHandler.SQLBackup.User;
+			string sqlBackupArgument = @"/C " + jsonHandler.SQLBackup.DumpDirectory + " " + jsonHandler.SQLBackup.DatabaseName + " -h " + jsonHandler.SQLBackup.Host + " -u " + jsonHandler.SQLBackup.User;
 
-			if (sqlBackup.Password == null || sqlBackup.Password == "")
+			if (sqlBackup.Password != null && sqlBackup.Password != "")
 			{
 				sqlBackupArgument += " -p " + jsonHandler.SQLBackup.Password;
 			}
 
-			sqlBackupArgument += " > " + jsonHandler.SQLBackup.BackupDirectory + @"\ " + DateTime.Now.ToString("MM-dd-yyyy HH-mm-ss") + ".sql";
+			sqlBackupArgument += " > " + jsonHandler.SQLBackup.BackupDirectory + @"\" + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".sql";
 
 			Process sqlBackupProcess = new Process();
 			ProcessStartInfo sqlBackupInfo = new ProcessStartInfo("cmd.exe")
@@ -251,7 +251,7 @@ namespace FiveMServerLauncher
 			sqlBackupProcess.StartInfo = sqlBackupInfo;
 			sqlBackupProcess.Start();
 
-			//C:\xampp\mysql\bin\mysqldump.exe db1 -h localhost -u user1 -pPassWord1 > C:\backups\db1-%date%.sql
+			//C:\xampp\mysql\bin\mysqldump.exe db1 -h localhost -u user1 -p PassWord1 > C:\backups\db1-%date%.sql
 		}
 
 		private void Output_Data(object sender, DataReceivedEventArgs a)
