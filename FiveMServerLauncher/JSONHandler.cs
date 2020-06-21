@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 using System.Text;
-using System.Threading;
 
 namespace FiveMServerLauncher
 {

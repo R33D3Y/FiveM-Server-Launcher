@@ -20,6 +20,7 @@ namespace FiveMServerLauncher
 	public partial class MainWindow : Window
 	{
 		private readonly JSONHandler jsonHandler;
+		private readonly MySQLHandler mySQLHandler;
 		private readonly RestartInformation restartInformation;
 		private readonly NodeCMDInformation nodeCMDInformation;
 		private readonly SQLBackup sqlBackup;
@@ -46,6 +47,8 @@ namespace FiveMServerLauncher
 			sqlBackup = jsonHandler.SQLBackup;
 			restartInformation = jsonHandler.RestartInformation;
 			nodeCMDInformation = jsonHandler.NodeCMDInformation;
+
+			mySQLHandler = new MySQLHandler(sqlBackup.Host,sqlBackup.DatabaseName, sqlBackup.User, sqlBackup.Password);
 
 			while (jsonHandler.GetServerDirectory() == null || jsonHandler.GetServerDirectory() == "")
 			{
@@ -96,6 +99,8 @@ namespace FiveMServerLauncher
 				RestartScheduler.Interval = TimeSpan.FromSeconds(60);
 				RestartScheduler.Tick += RestartScheduler_Tick;
 				RestartScheduler.Start();
+
+				Stop();
 			}
 		}
 
