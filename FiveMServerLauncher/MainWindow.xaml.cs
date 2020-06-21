@@ -236,6 +236,13 @@ namespace FiveMServerLauncher
 			}
 			catch (Exception) { }
 
+			string folder = jsonHandler.SQLBackup.BackupDirectory + @"\" + DateTime.Now.ToString("MM-dd-yyyy");
+
+			if (!Directory.Exists(folder))
+			{
+				Directory.CreateDirectory(folder);
+			}
+
 			string sqlBackupArgument = @"/C " + jsonHandler.SQLBackup.DumpDirectory + " " + jsonHandler.SQLBackup.DatabaseName + " -h " + jsonHandler.SQLBackup.Host + " -u " + jsonHandler.SQLBackup.User;
 
 			if (sqlBackup.Password != null && sqlBackup.Password != "")
@@ -243,7 +250,7 @@ namespace FiveMServerLauncher
 				sqlBackupArgument += " -p " + jsonHandler.SQLBackup.Password;
 			}
 
-			sqlBackupArgument += " > " + jsonHandler.SQLBackup.BackupDirectory + @"\" + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".sql";
+			sqlBackupArgument += " > " + folder + @"\" + DateTime.Now.ToString("HH-mm-ss") + ".sql";
 
 			Process sqlBackupProcess = new Process();
 			ProcessStartInfo sqlBackupInfo = new ProcessStartInfo("cmd.exe")
