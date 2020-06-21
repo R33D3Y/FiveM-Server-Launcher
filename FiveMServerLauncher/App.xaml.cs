@@ -14,6 +14,7 @@ namespace FiveMServerLauncher
 		{
 			base.OnStartup(e);
 			AppCenter.Start(AppToken.ID, typeof(Analytics), typeof(Crashes));
+			AppCenter.SetEnabledAsync(true);
 		}
 	}
 }

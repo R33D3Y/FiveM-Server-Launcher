@@ -6,12 +6,10 @@ namespace FiveMServerLauncher
 {
 	public class JSONHandler
 	{
-		//private readonly string path;
 		private readonly string jsonPath;
 
 		public JSONHandler(string launcherDir)
 		{
-			//path = launcherDir;
 			jsonPath = launcherDir + @"\config.json";
 
 			if (!File.Exists(jsonPath))
