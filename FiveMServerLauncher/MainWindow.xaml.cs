@@ -262,8 +262,6 @@ namespace FiveMServerLauncher
 
 			sqlBackupProcess.StartInfo = sqlBackupInfo;
 			sqlBackupProcess.Start();
-
-			//C:\xampp\mysql\bin\mysqldump.exe db1 -h localhost -u user1 -p PassWord1 > C:\backups\db1-%date%.sql
 		}
 
 		private void Output_Data(object sender, DataReceivedEventArgs a)

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30105.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiveMServerLauncher", "FiveMServerLauncher\FiveMServerLauncher.csproj", "{C7B994D4-84F5-4C8B-A316-96EFDE7FFB5E}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FiveMServerLauncherInstaller", "FiveMServerLauncherInstaller\FiveMServerLauncherInstaller.vdproj", "{B0599186-147D-425E-9E42-0131E4C76EC1}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,16 +41,16 @@ Global
 		{C7B994D4-84F5-4C8B-A316-96EFDE7FFB5E}.Release|x64.Build.0 = Release|Any CPU
 		{C7B994D4-84F5-4C8B-A316-96EFDE7FFB5E}.Release|x86.ActiveCfg = Release|Any CPU
 		{C7B994D4-84F5-4C8B-A316-96EFDE7FFB5E}.Release|x86.Build.0 = Release|Any CPU
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Debug|Any CPU.ActiveCfg = Debug
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Debug|ARM.ActiveCfg = Debug
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Debug|ARM64.ActiveCfg = Debug
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Debug|x64.ActiveCfg = Debug
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Debug|x86.ActiveCfg = Debug
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Release|Any CPU.ActiveCfg = Release
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Release|ARM.ActiveCfg = Release
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Release|ARM64.ActiveCfg = Release
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Release|x64.ActiveCfg = Release
-		{B0599186-147D-425E-9E42-0131E4C76EC1}.Release|x86.ActiveCfg = Release
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Debug|Any CPU.ActiveCfg = Debug
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Debug|ARM.ActiveCfg = Debug
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Debug|ARM64.ActiveCfg = Debug
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Debug|x64.ActiveCfg = Debug
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Debug|x86.ActiveCfg = Debug
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Release|Any CPU.ActiveCfg = Release
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Release|ARM.ActiveCfg = Release
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Release|ARM64.ActiveCfg = Release
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Release|x64.ActiveCfg = Release
+		{6C5417B3-C2D8-4C2C-B647-58522DEC11F5}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
