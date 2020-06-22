@@ -16,7 +16,7 @@ namespace FiveMServerLauncher
 				connectionString += "password=" + pass;
 			}
 
-			Test();
+			//Test();
 		}
 
 		private void Test()

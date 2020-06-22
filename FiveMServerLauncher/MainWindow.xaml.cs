@@ -422,24 +422,27 @@ namespace FiveMServerLauncher
 
 		private void RestartScheduler_Tick(object sender, EventArgs e)
 		{
-			foreach (RestartData restartData in restartInformation.Data)
+			if (jsonHandler.RestartInformation.Enabled)
 			{
-				if (DateTime.Now.Hour == restartData.RestartHour && DateTime.Now.Minute == restartData.RestartMinute)
+				foreach (RestartData restartData in restartInformation.Data)
 				{
-					RestartStopStart(restartData);
-				}
-				else
-				{
-					if ((restartData.RestartMinute - restartData.MinuteWarning) < 0)
+					if (DateTime.Now.Hour == restartData.RestartHour && DateTime.Now.Minute == restartData.RestartMinute)
 					{
-						if (DateTime.Now.Hour == (restartData.RestartHour - 1) && DateTime.Now.Minute == (60 - restartData.MinuteWarning))
+						RestartStopStart(restartData);
+					}
+					else
+					{
+						if ((restartData.RestartMinute - restartData.MinuteWarning) < 0)
+						{
+							if (DateTime.Now.Hour == (restartData.RestartHour - 1) && DateTime.Now.Minute == (60 - restartData.MinuteWarning))
+							{
+								RestartStopStartWarning(restartData);
+							}
+						}
+						else if (DateTime.Now.Hour == restartData.RestartHour && DateTime.Now.Minute == (restartData.RestartMinute - restartData.MinuteWarning))
 						{
 							RestartStopStartWarning(restartData);
 						}
-					}
-					else if (DateTime.Now.Hour == restartData.RestartHour && DateTime.Now.Minute == (restartData.RestartMinute - restartData.MinuteWarning))
-					{
-						RestartStopStartWarning(restartData);
 					}
 				}
 			}
