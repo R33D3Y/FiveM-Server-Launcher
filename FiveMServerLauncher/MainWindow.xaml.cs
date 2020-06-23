@@ -238,32 +238,7 @@ namespace FiveMServerLauncher
 			}
 			catch (Exception) { }
 
-			string folder = jsonHandler.SQLBackup.BackupDirectory + @"\" + DateTime.Now.ToString("MM-dd-yyyy");
-
-			if (!Directory.Exists(folder))
-			{
-				Directory.CreateDirectory(folder);
-			}
-
-			string sqlBackupArgument = @"/C " + jsonHandler.SQLBackup.DumpDirectory + " " + jsonHandler.SQLBackup.DatabaseName + " -h " + jsonHandler.SQLBackup.Host + " -u " + jsonHandler.SQLBackup.User;
-
-			if (sqlBackup.Password != null && sqlBackup.Password != "")
-			{
-				sqlBackupArgument += " -p " + jsonHandler.SQLBackup.Password;
-			}
-
-			sqlBackupArgument += " > " + folder + @"\" + DateTime.Now.ToString("HH-mm-ss") + ".sql";
-
-			Process sqlBackupProcess = new Process();
-			ProcessStartInfo sqlBackupInfo = new ProcessStartInfo("cmd.exe")
-			{
-				CreateNoWindow = true,
-				UseShellExecute = false,
-				Arguments = sqlBackupArgument
-			};
-
-			sqlBackupProcess.StartInfo = sqlBackupInfo;
-			sqlBackupProcess.Start();
+			RunSQLBackup();
 		}
 
 		private void Output_Data(object sender, DataReceivedEventArgs a)
@@ -395,6 +370,36 @@ namespace FiveMServerLauncher
 		}
 
 		#endregion Console Methods
+
+		private void RunSQLBackup()
+		{
+			string folder = jsonHandler.SQLBackup.BackupDirectory + @"\" + DateTime.Now.ToString("MM-dd-yyyy");
+
+			if (!Directory.Exists(folder))
+			{
+				Directory.CreateDirectory(folder);
+			}
+
+			string sqlBackupArgument = @"/C " + jsonHandler.SQLBackup.DumpDirectory + " " + jsonHandler.SQLBackup.DatabaseName + " -h " + jsonHandler.SQLBackup.Host + " -u " + jsonHandler.SQLBackup.User;
+
+			if (sqlBackup.Password != null && sqlBackup.Password != "")
+			{
+				sqlBackupArgument += " -p " + jsonHandler.SQLBackup.Password;
+			}
+
+			sqlBackupArgument += " > " + folder + @"\" + DateTime.Now.ToString("HH-mm-ss") + ".sql";
+
+			Process sqlBackupProcess = new Process();
+			ProcessStartInfo sqlBackupInfo = new ProcessStartInfo("cmd.exe")
+			{
+				CreateNoWindow = true,
+				UseShellExecute = false,
+				Arguments = sqlBackupArgument
+			};
+
+			sqlBackupProcess.StartInfo = sqlBackupInfo;
+			sqlBackupProcess.Start();
+		}
 
 		#endregion Server
 
@@ -644,6 +649,11 @@ namespace FiveMServerLauncher
 		{
 			sqlBackup.Enabled = (bool)checkBoxSQLBackUp.IsChecked;
 			jsonHandler.UpdateJSON();
+		}
+
+		private void ButtonManualSQLBackup_Click(object sender, RoutedEventArgs e)
+		{
+			RunSQLBackup();
 		}
 
 		#endregion SQL Backup

@@ -134,6 +134,7 @@
                                 <TextBox x:Name="textBoxBackUpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxBackUpDir_LostFocus"/>
 
                                 <CheckBox x:Name="checkBoxSQLBackUp" Content="Enable SQL Backups" Margin="10,5,10,5" Foreground="#FFF1F1F1" Checked="CheckBoxSQLBackUp_Checked"/>
+                                <Button x:Name="buttonManualSQLBackup" Content="Manual Backup" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="24" Click="ButtonManualSQLBackup_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555" Margin="10,75,10,10"/>
                             </StackPanel>
                         </TabPanel>
                     </TabItem>
