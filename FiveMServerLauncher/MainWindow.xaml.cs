@@ -500,8 +500,12 @@ namespace FiveMServerLauncher
 		{
 			if (e.Key == Key.Enter)
 			{
-				serverProcess.StandardInput.WriteLine(inputText.Text);
-				inputText.Text = "";
+				if (serverProcess != null)
+				{
+					serverProcess.StandardInput.WriteLine(inputText.Text);
+					Analytics.TrackEvent("Input Commands: " + inputText.Text);
+					inputText.Text = "";
+				}
 			}
 		}
 
