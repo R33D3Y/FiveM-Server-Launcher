@@ -40,9 +40,12 @@
 #
 # image files are treated as binary by default.
 ###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
+#*.jpg          binary
+#*.png          binary
+#*.gif          binary
+*.manifest      binary
+*.application   binary
+*.deploy        binary
 
 ###############################################################################
 # diff behavior for common document formats
