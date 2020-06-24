@@ -64,7 +64,7 @@
                 </TabControl>
             </Border>
             <Grid>
-                <Button Name="btnLeftMenuHide" Margin="-105,0,0,0" Width="250" Height="30" Click="BtnLeftMenuHide_Click" Content="Hide Restart Schedule &amp; CMD/Node Script" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
+                <Button Name="btnLeftMenuHide" Margin="-115,0,0,0" Width="270" Height="30" Click="BtnLeftMenuHide_Click" Content="Hide Restart Schedule &amp; CMD/Node Script" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -74,7 +74,7 @@
                         </TransformGroup>
                     </Button.RenderTransform>
                 </Button>
-                <Button Name="btnLeftMenuShow" Margin="-105,0,0,0" Width="250" Height="30" Click="BtnLeftMenuShow_Click" Content="Show Restart Schedule &amp; CMD/Node Script" RenderTransformOrigin="0.5,0.5" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
+                <Button Name="btnLeftMenuShow" Margin="-115,0,0,0" Width="270" Height="30" Click="BtnLeftMenuShow_Click" Content="Show Restart Schedule &amp; CMD/Node Script" RenderTransformOrigin="0.5,0.5" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -89,7 +89,7 @@
 
         <StackPanel Panel.ZIndex="2" Name="pnlRightMenu" Orientation="Horizontal" Height="575" HorizontalAlignment="Right" Margin="0,0,-281,40">
             <Grid>
-                <Button Name="btnRightMenuHide" Margin="0,0,-105,0" Width="250" Height="30" Click="BtnRightMenuHide_Click" Content="Hide SQL Backups" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
+                <Button Name="btnRightMenuHide" Margin="0,0,-115,0" Width="270" Height="30" Click="BtnRightMenuHide_Click" Content="Hide SQL Backups &amp; Resource Management" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -99,7 +99,7 @@
                         </TransformGroup>
                     </Button.RenderTransform>
                 </Button>
-                <Button Name="btnRightMenuShow" Margin="0,0,-105,0" Width="250" Height="30" Click="BtnRightMenuShow_Click" Content="Show SQL Backups" RenderTransformOrigin="0.5,0.5" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
+                <Button Name="btnRightMenuShow" Margin="0,0,-115,0" Width="270" Height="30" Click="BtnRightMenuShow_Click" Content="Show SQL Backups &amp; Resource Management" RenderTransformOrigin="0.5,0.5" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderBrush="#FF555555">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -138,6 +138,13 @@
                             </StackPanel>
                         </TabPanel>
                     </TabItem>
+                    <TabItem Header="Resource Management" Background="#FF252526">
+                        <TabPanel>
+                            <ScrollViewer HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="280" Background="#FF252526">
+                                <StackPanel x:Name="stackResourceManagement" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
+                            </ScrollViewer>
+                        </TabPanel>
+                    </TabItem>
                 </TabControl>
             </Border>
         </StackPanel>
@@ -155,5 +162,6 @@
         <Button x:Name="startServer" Content="Start" HorizontalAlignment="Left" Margin="39,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="StartServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
         <Button x:Name="stopServer" Content="Stop" HorizontalAlignment="Left" Margin="269,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="StopServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
         <Button x:Name="restartServer" Content="Restart Now" HorizontalAlignment="Left" Margin="154,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="RestartServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
+        <Label x:Name="versionLabel" Content="Version 0.0.0.0" HorizontalAlignment="Left" Margin="647,659,0,0" VerticalAlignment="Top" Height="24" Width="172" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Foreground="#FF727272"/>
     </Grid>
 </Window>

@@ -13,7 +13,7 @@ namespace FiveMServerLauncher
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
-			AppCenter.LogLevel = LogLevel.Verbose;
+			//AppCenter.LogLevel = LogLevel.Verbose;
 			AppCenter.Start(AppToken.ID, typeof(Analytics), typeof(Crashes));
 			AppCenter.SetEnabledAsync(true);
 		}

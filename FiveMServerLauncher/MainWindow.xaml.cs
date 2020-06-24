@@ -103,6 +103,8 @@ namespace FiveMServerLauncher
 				RestartScheduler.Start();
 
 				Stop();
+
+				versionLabel.Content = "Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 			}
 		}
 
