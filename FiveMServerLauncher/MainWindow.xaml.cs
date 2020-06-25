@@ -33,6 +33,8 @@ namespace FiveMServerLauncher
 		private Process serverProcess;
 		private readonly List<Process> nodeProcesses = new List<Process>();
 
+		private readonly List<ResourceManagerControl> resourceManagerControls = new List<ResourceManagerControl>();
+
 		private string logFileLocation = "";
 		private readonly bool closing = false;
 
@@ -94,7 +96,7 @@ namespace FiveMServerLauncher
 				CreateRestartControls();
 				CreateNodeCMDControls();
 
-				UIUpdater.Interval = TimeSpan.FromSeconds(0.5);
+				UIUpdater.Interval = TimeSpan.FromSeconds(1);
 				UIUpdater.Tick += UIUpdater_Tick;
 				UIUpdater.Start();
 
@@ -151,6 +153,8 @@ namespace FiveMServerLauncher
 			DecideLogLocation();
 			ResetConsole();
 			nodeProcesses.Clear();
+			resourceManagerControls.Clear();
+			stackResourceManagement.Children.Clear();
 
 			serverProcess = new Process();
 
@@ -318,6 +322,54 @@ namespace FiveMServerLauncher
 
 				tr.ApplyPropertyValue(TextElement.ForegroundProperty, DecideColour(str.ToLower()));
 			});
+
+			string[] split = str.Split(' ');
+
+			if (split.Length > 3)
+			{
+				if (str.Contains("Found new resource"))
+				{
+					ControlResourceManager(split[4], false);
+				}
+				else if (str.Contains("Started"))
+				{
+					ControlResourceManager(split[3], true);
+				}
+				else if (str.Contains("Stopping"))
+				{
+					ControlResourceManager(split[3], false);
+				}
+			}
+		}
+
+		private void ControlResourceManager(string str, bool run)
+		{
+			bool found = false;
+
+			foreach (ResourceManagerControl rmc in resourceManagerControls)
+			{
+				if (rmc.ResourceName == str)
+				{
+					found = true;
+
+					System.Windows.Application.Current.Dispatcher.Invoke(delegate
+					{
+						rmc.SetRunning(run);
+					});
+					
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				System.Windows.Application.Current.Dispatcher.Invoke(delegate
+				{
+					ResourceManagerControl rmc = new ResourceManagerControl(this, str);
+					stackResourceManagement.Children.Add(rmc);
+					resourceManagerControls.Add(rmc);
+				});
+			}
 		}
 
 		private void UpdateConsole(string output)
@@ -401,6 +453,11 @@ namespace FiveMServerLauncher
 
 			sqlBackupProcess.StartInfo = sqlBackupInfo;
 			sqlBackupProcess.Start();
+		}
+
+		internal void SendToConsole(string v)
+		{
+			serverProcess.StandardInput.WriteLine(v);
 		}
 
 		#endregion Server

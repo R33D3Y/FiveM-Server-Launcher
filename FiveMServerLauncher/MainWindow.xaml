@@ -112,7 +112,7 @@
             </Grid>
             <Border Width="280">
                 <TabControl x:Name="tabControlRight" TabStripPlacement="Top" Background="#FF252526">
-                    <TabItem Header="SQL Backups" Background="#FF252526">
+                    <TabItem Header="SQL Backups">
                         <TabPanel>
                             <StackPanel HorizontalAlignment="Left" Height="550" Width="275">
                                 <Label x:Name="label" Content="MySQLDump.exe Directory:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5" />
@@ -138,9 +138,9 @@
                             </StackPanel>
                         </TabPanel>
                     </TabItem>
-                    <TabItem Header="Resource Management" Background="#FF252526">
+                    <TabItem Header="Resource Management">
                         <TabPanel>
-                            <ScrollViewer HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="280" Background="#FF252526">
+                            <ScrollViewer HorizontalAlignment="Left" Height="550" VerticalAlignment="Top" Width="275" Background="#FF252526">
                                 <StackPanel x:Name="stackResourceManagement" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
                             </ScrollViewer>
                         </TabPanel>
