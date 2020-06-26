@@ -33,7 +33,17 @@ To access the CMD/Node Scripts click the button on the left labeled 'Show Restar
 3. Tick 'Enable On Server Start' to make sure these changes take effect when the Server is started.
 
 ### SQL Backups
--- Blah
+To access the SQL Backups click the button on the left labeled 'Show SQL Backups & Resource Management' and select the 'SQL Backups' tab.
+
+1. Enter the MySQLDump.exe Directory or click the '...' button to use the FileDialog selector.
+2. Enter the FiveM Database Name in use.
+3. Enter the Host address.
+4. Enter the User.
+5. Enter the Password.
+6. Enter the desired Backup Directory or click the '...' button to use the FikderDialog selector.
+7. Tick 'Enable SQL Backups' to make sure these changes take effect when the Server is stopped/restarted.
+
+The 'Manual Backup' can be used to simply take a backup upon clicking.
 
 ### Resource Management
 -- Blah
