@@ -6059,7 +6059,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FiveM Server Launcher"
         "ProductCode" = "8:{F216D4BD-7375-4AD8-9DEB-EB64B3D19482}"
-        "PackageCode" = "8:{1D28FF5D-F364-495C-82C3-F0BC7449F9AC}"
+        "PackageCode" = "8:{05C1AE71-FA97-4BED-8124-AB9F5C9FEB13}"
         "UpgradeCode" = "8:{C97AD757-3EE6-4A99-B408-63B9129F4426}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -6190,7 +6190,7 @@
             "Target" = "8:_37346048F98B49ACA461606B2F2FBCB0"
             "Folder" = "8:_F2F1C7062CE54E148F6CAA96E31854D9"
             "WorkingFolder" = "8:_8BC72653E761451D9455614308EFEE45"
-            "Icon" = "8:"
+            "Icon" = "8:_5940D7A6CA5047EFBD1E3ED4A1AAF22B"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F48B6481F343451EADEFC1A520B3A1E8"
@@ -6204,7 +6204,7 @@
             "Target" = "8:_37346048F98B49ACA461606B2F2FBCB0"
             "Folder" = "8:_7E6154EFE28F47B995E6D28EAF40D4AC"
             "WorkingFolder" = "8:_8BC72653E761451D9455614308EFEE45"
-            "Icon" = "8:"
+            "Icon" = "8:_5940D7A6CA5047EFBD1E3ED4A1AAF22B"
             "Feature" = "8:"
             }
         }
