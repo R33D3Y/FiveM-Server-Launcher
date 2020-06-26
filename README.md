@@ -45,7 +45,12 @@ To access the SQL Backups click the button on the left labeled 'Show SQL Backups
 
 The 'Manual Backup' can be used to simply take a backup upon clicking.
 
-### Resource Management
--- Blah
-
 ## Daily Use
+When running the Launcher as per normal, simply hit the 'Start' button and watch your server boot.
+
+## Resource Management
+When the server has started there is feature that allows for starting/restarting/stopping resources.
+
+To access the Resource Management click the button on the left labeled 'Show SQL Backups & Resource Management' and select the 'Resource Management' tab.
+Once the server has started the Launcher will list all resources that go through the console.
+Using the TextBox at the top of the Panel, there is the ability to search for the Resources found.
