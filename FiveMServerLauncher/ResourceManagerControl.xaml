@@ -4,21 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FiveMServerLauncher"
-             mc:Ignorable="d" Height="45.134" Foreground="#FF252526" Background="#FF252526" BorderBrush="#FF434346" BorderThickness="1" Width="260">
+             mc:Ignorable="d" Height="37.634" Foreground="#FF252526" Background="#FF252526" BorderBrush="#FF434346" BorderThickness="1" Width="260">
     <Grid>
-        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,9,0,0" Foreground="#FFF1F1F1" Width="159"/>
+        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,5,0,0" Foreground="#FFF1F1F1" Width="159"/>
 
-        <Button x:Name="buttonStart" HorizontalAlignment="Left" Margin="171,10,0,0" VerticalAlignment="Top" Width="24" Height="25" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="StartButton_Click" BorderBrush="{x:Null}" Foreground="{x:Null}" ToolTip="Start Resource">
+        <Button x:Name="buttonStart" HorizontalAlignment="Left" Margin="171,5,0,0" VerticalAlignment="Top" Width="24" Height="25" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="StartButton_Click" BorderBrush="{x:Null}" Foreground="{x:Null}" ToolTip="Start Resource">
             <Button.Background>
                 <ImageBrush ImageSource="tick.png"/>
             </Button.Background>
         </Button>
-        <Button x:Name="buttonRestart" HorizontalAlignment="Left" Margin="200,12,0,0" VerticalAlignment="Top" Width="19" Height="20" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="RestartButton_Click" BorderBrush="{x:Null}" Foreground="{x:Null}" ToolTip="Restart Resource" Visibility="Collapsed">
+        <Button x:Name="buttonRestart" HorizontalAlignment="Left" Margin="200,7,0,0" VerticalAlignment="Top" Width="19" Height="20" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="RestartButton_Click" BorderBrush="{x:Null}" Foreground="{x:Null}" ToolTip="Restart Resource" Visibility="Collapsed">
             <Button.Background>
                 <ImageBrush ImageSource="refresh.png"/>
             </Button.Background>
         </Button>
-        <Button x:Name="buttonStop" HorizontalAlignment="Left" Margin="224,10,0,0" VerticalAlignment="Top" Width="24" Height="25" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="StopButton_Click" BorderBrush="{x:Null}" Foreground="{x:Null}" ToolTip="Stop Resource" Visibility="Collapsed">
+        <Button x:Name="buttonStop" HorizontalAlignment="Left" Margin="224,5,0,0" VerticalAlignment="Top" Width="24" Height="25" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="StopButton_Click" BorderBrush="{x:Null}" Foreground="{x:Null}" ToolTip="Stop Resource" Visibility="Collapsed">
             <Button.Background>
                 <ImageBrush ImageSource="cross.png"/>
             </Button.Background>

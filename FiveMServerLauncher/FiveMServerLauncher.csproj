@@ -268,7 +268,9 @@
     <Resource Include="addIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FiveMServerLauncherLogo.ico" />
+    <Resource Include="FiveMServerLauncherLogo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="minusIcon.png" />

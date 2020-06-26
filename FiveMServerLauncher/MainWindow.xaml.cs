@@ -580,17 +580,32 @@ namespace FiveMServerLauncher
 
 		private void StartServer_Click(object sender, RoutedEventArgs e)
 		{
+			for (int i = 0; i < 10; i++)
+			{
+				Append_Text("=============== SERVER STARTED MANUALLY ===============");
+			}
+
 			Start();
 		}
 
 		private void RestartServer_Click(object sender, RoutedEventArgs e)
 		{
 			Restart();
+
+			for (int i = 0; i < 10; i++)
+			{
+				Append_Text("=============== SERVER RESTARTED MANUALLY ===============");
+			}
 		}
 
 		private void StopServer_Click(object sender, RoutedEventArgs e)
 		{
 			Stop();
+
+			for (int i = 0; i < 10; i++)
+			{
+				Append_Text("=============== SERVER STOPPED MANUALLY ===============");
+			}
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
