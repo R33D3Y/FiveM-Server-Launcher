@@ -447,6 +447,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5940D7A6CA5047EFBD1E3ED4A1AAF22B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5A98A4F8BC75FA80D20ED24BAE8F04C5"
         "OwnerKey" = "8:_37346048F98B49ACA461606B2F2FBCB0"
         "MsmSig" = "8:_UNDEFINED"
@@ -3341,6 +3347,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5940D7A6CA5047EFBD1E3ED4A1AAF22B"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Downloads\\FiveMServerLauncherLogo.ico"
+            "TargetName" = "8:FiveMServerLauncherLogo.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_8BC72653E761451D9455614308EFEE45"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5A98A4F8BC75FA80D20ED24BAE8F04C5"
             {
             "AssemblyRegister" = "3:1"
@@ -6032,15 +6058,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FiveM Server Launcher"
-        "ProductCode" = "8:{0812C3D4-9636-442E-BF64-365B1DFDF333}"
-        "PackageCode" = "8:{A34A2627-AC6D-4E11-81A0-2367F659BF96}"
+        "ProductCode" = "8:{F216D4BD-7375-4AD8-9DEB-EB64B3D19482}"
+        "PackageCode" = "8:{1D28FF5D-F364-495C-82C3-F0BC7449F9AC}"
         "UpgradeCode" = "8:{C97AD757-3EE6-4A99-B408-63B9129F4426}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.0.51"
+        "ProductVersion" = "8:0.1.6"
         "Manufacturer" = "8:R33D3Y"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -6050,7 +6076,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:FiveM Server Launcher"
         "ARPURLINFOABOUT" = "8:https://github.com/R33D3Y"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_5940D7A6CA5047EFBD1E3ED4A1AAF22B"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
