@@ -33,10 +33,9 @@ namespace FiveMServerLauncher
 		private Process serverProcess;
 		private readonly List<Process> nodeProcesses = new List<Process>();
 
-		private readonly List<ResourceManagerControl> resourceManagerControls = new List<ResourceManagerControl>();
+		private List<ResourceManagerControl> resourceManagerControls = new List<ResourceManagerControl>();
 
 		private string logFileLocation = "";
-		private readonly bool closing = false;
 
 		public MainWindow()
 		{
@@ -54,60 +53,27 @@ namespace FiveMServerLauncher
 
 			mySQLHandler = new MySQLHandler(sqlBackup.Host,sqlBackup.DatabaseName, sqlBackup.User, sqlBackup.Password);
 
-			while (jsonHandler.GetServerDirectory() == null || jsonHandler.GetServerDirectory() == "")
+			if ((jsonHandler.GetServerDirectory() == null || jsonHandler.GetServerDirectory() == "") || (jsonHandler.GetServerConfigDirectory() == null || jsonHandler.GetServerConfigDirectory() == ""))
 			{
-				MessageBoxResult msgResult = System.Windows.MessageBox.Show("Please Select The Server Directory", "FiveM Server Launcher", MessageBoxButton.OKCancel, (MessageBoxImage)MessageBoxIcon.Error);
-
-				if (msgResult == MessageBoxResult.Cancel)
-				{
-					closing = true;
-					Close();
-					break;
-				}
-
-				using (var dialog = new FolderBrowserDialog())
-				{
-					DialogResult result = dialog.ShowDialog();
-					jsonHandler.SetServerDirectory(dialog.SelectedPath);
-				}
+				ServerDirConfig serverDirConfig = new ServerDirConfig(this, jsonHandler);
+				serverDirConfig.ShowDialog();
 			}
 
-			if (!closing)
-			{
-				while (jsonHandler.GetServerConfigDirectory() == null || jsonHandler.GetServerConfigDirectory() == "")
-				{
-					MessageBoxResult msgResult = System.Windows.MessageBox.Show("Please Select The Server Config Directory", "FiveM Server Launcher", MessageBoxButton.OKCancel, (MessageBoxImage)MessageBoxIcon.Error);
+			CreateSQLBackupControl();
+			CreateRestartControls();
+			CreateNodeCMDControls();
 
-					if (msgResult == MessageBoxResult.Cancel)
-					{
-						closing = true;
-						Close();
-						break;
-					}
+			UIUpdater.Interval = TimeSpan.FromSeconds(1);
+			UIUpdater.Tick += UIUpdater_Tick;
+			UIUpdater.Start();
 
-					using (var dialog = new OpenFileDialog())
-					{
-						DialogResult result = dialog.ShowDialog();
-						jsonHandler.SetServerConfigDirectory(dialog.FileName);
-					}
-				}
+			RestartScheduler.Interval = TimeSpan.FromSeconds(60);
+			RestartScheduler.Tick += RestartScheduler_Tick;
+			RestartScheduler.Start();
 
-				CreateSQLBackupControl();
-				CreateRestartControls();
-				CreateNodeCMDControls();
+			Stop();
 
-				UIUpdater.Interval = TimeSpan.FromSeconds(1);
-				UIUpdater.Tick += UIUpdater_Tick;
-				UIUpdater.Start();
-
-				RestartScheduler.Interval = TimeSpan.FromSeconds(60);
-				RestartScheduler.Tick += RestartScheduler_Tick;
-				RestartScheduler.Start();
-
-				Stop();
-
-				versionLabel.Content = "Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-			}
+			versionLabel.Content = "Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 		}
 
 		private void CreateSQLBackupControl()
@@ -245,6 +211,9 @@ namespace FiveMServerLauncher
 			catch (Exception) { }
 
 			RunSQLBackup();
+
+			resourceManagerControls.Clear();
+			stackResourceManagement.Children.Clear();
 		}
 
 		private void Output_Data(object sender, DataReceivedEventArgs a)
@@ -370,6 +339,8 @@ namespace FiveMServerLauncher
 					resourceManagerControls.Add(rmc);
 				});
 			}
+
+			resourceManagerControls = resourceManagerControls.OrderBy(x => x.ResourceName).ToList();
 		}
 
 		private void UpdateConsole(string output)
@@ -457,7 +428,15 @@ namespace FiveMServerLauncher
 
 		internal void SendToConsole(string v)
 		{
-			serverProcess.StandardInput.WriteLine(v);
+			if (serverProcess != null)
+			{
+				serverProcess.StandardInput.WriteLine(v);
+			}
+			else
+			{
+				resourceManagerControls.Clear();
+				stackResourceManagement.Children.Clear();
+			}
 		}
 
 		#endregion Server
@@ -634,6 +613,11 @@ namespace FiveMServerLauncher
 		{
 			Close();
 		}
+		private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+		{
+			ServerDirConfig serverDirConfig = new ServerDirConfig(this, jsonHandler);
+			serverDirConfig.ShowDialog();
+		}
 
 		private void ButtonAddCMDNode_Click(object sender, RoutedEventArgs e)
 		{
@@ -735,6 +719,32 @@ namespace FiveMServerLauncher
 		}
 
 		#endregion SQL Backup
+
+		private void TextBoxResourceSearch_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			stackResourceManagement.Children.Clear();
+
+			if (textBoxResourceSearch.Text != "")
+			{
+				foreach (ResourceManagerControl rmc in resourceManagerControls)
+				{
+					if (rmc.ResourceName.ToLower().Contains(textBoxResourceSearch.Text.ToLower()))
+					{
+						stackResourceManagement.Children.Add(rmc);
+					}
+				}
+			}
+			else
+			{
+				System.Windows.Application.Current.Dispatcher.Invoke(delegate
+				{
+					foreach (ResourceManagerControl rmc in resourceManagerControls)
+					{
+						stackResourceManagement.Children.Add(rmc);
+					}
+				});
+			}
+		}
 
 		#endregion Event Handlers
 	}

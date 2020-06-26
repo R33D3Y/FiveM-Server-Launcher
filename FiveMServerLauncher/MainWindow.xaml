@@ -32,6 +32,11 @@
                 <ImageBrush ImageSource="minusIcon.png"/>
             </Button.Background>
         </Button>
+        <Button x:Name="buttonSettings" HorizontalAlignment="Left" Margin="742,6,0,0" VerticalAlignment="Top" Width="33" Height="33" RenderTransformOrigin="0.47,0.33" Cursor="Hand" Click="ButtonSettings_Click" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="icons8-settings-100.png"/>
+            </Button.Background>
+        </Button>
 
         <StackPanel Panel.ZIndex="2" Name="pnlLeftMenu" Orientation="Horizontal" VerticalAlignment="Top" Height="575" Margin="-281,40,0,0">
             <Border Width="280">
@@ -140,9 +145,12 @@
                     </TabItem>
                     <TabItem Header="Resource Management">
                         <TabPanel>
-                            <ScrollViewer HorizontalAlignment="Left" Height="550" VerticalAlignment="Top" Width="275" Background="#FF252526">
-                                <StackPanel x:Name="stackResourceManagement" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
-                            </ScrollViewer>
+                            <StackPanel>
+                                <TextBox x:Name="textBoxResourceSearch" Height="23" Margin="10,10,10,10" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" TextChanged="TextBoxResourceSearch_TextChanged"/>
+                                <ScrollViewer HorizontalAlignment="Left" Height="505" VerticalAlignment="Top" Width="275" Background="#FF252526">
+                                    <StackPanel x:Name="stackResourceManagement" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
+                                </ScrollViewer>
+                            </StackPanel>
                         </TabPanel>
                     </TabItem>
                 </TabControl>
