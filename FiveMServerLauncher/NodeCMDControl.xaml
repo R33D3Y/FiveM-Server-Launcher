@@ -16,9 +16,10 @@
         <Label x:Name="label1" Content="Directory" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,41,0,0" Foreground="#FFF1F1F1"/>
         <Label x:Name="label2" Content="Arguments" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,72,0,0" Foreground="#FFF1F1F1"/>
         
-        <TextBox x:Name="textBoxDir" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="180" Margin="78,45,0,0" VerticalContentAlignment="Center" LostFocus="TextBoxDir_LostFocus"/>
+        <TextBox x:Name="textBoxDir" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="148" Margin="78,45,0,0" VerticalContentAlignment="Center" LostFocus="TextBoxDir_LostFocus"/>
         <TextBox x:Name="textBoxArg" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="180" Margin="78,75,0,0" VerticalContentAlignment="Center" LostFocus="TextBoxArg_LostFocus"/>
         
         <CheckBox x:Name="checkBox" Content="Enabled On Server Start" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Foreground="#FFF1F1F1" BorderBrush="#FF999999" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
+        <Button x:Name="buttonBrowseDir" Content="..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" Height="23" Click="ButtonBrowseDir_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555" Margin="233,45,0,0"/>
     </Grid>
 </UserControl>

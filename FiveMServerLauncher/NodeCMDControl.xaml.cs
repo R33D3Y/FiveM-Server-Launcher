@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace FiveMServerLauncher
 {
 	/// <summary>
 	/// Interaction logic for RestartControl.xaml
 	/// </summary>
-	public partial class NodeCMDControl : UserControl
+	public partial class NodeCMDControl : System.Windows.Controls.UserControl
 	{
 		private readonly MainWindow MainWindow;
 		private readonly NodeCMD nodeCMD;
@@ -50,6 +51,16 @@ namespace FiveMServerLauncher
 		{
 			nodeCMD.Arguments = textBoxArg.Text;
 			jsonHandler.UpdateJSON();
+		}
+
+		private void ButtonBrowseDir_Click(object sender, RoutedEventArgs e)
+		{
+			using (var dialog = new FolderBrowserDialog())
+			{
+				DialogResult result = dialog.ShowDialog();
+				nodeCMD.Directory = dialog.SelectedPath;
+				textBoxDir.Text = dialog.SelectedPath;
+			}
 		}
 	}
 }
