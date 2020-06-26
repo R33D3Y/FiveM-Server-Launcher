@@ -95,7 +95,7 @@ namespace FiveMServerLauncher
 
 			foreach (RestartData restartData in restartInformation.Data)
 			{
-				RestartControlPanel.Children.Add(new RestartControl(count, restartInformation.Data[count], jsonHandler));
+				RestartControlPanel.Children.Add(new RestartControl(this, count, restartInformation.Data[count], jsonHandler));
 				count++;
 			}
 		}
@@ -107,7 +107,7 @@ namespace FiveMServerLauncher
 
 			foreach (NodeCMD nodeCMD in nodeCMDInformation.Data)
 			{
-				CMDNodeControlPanel.Children.Add(new NodeCMDControl(count, nodeCMDInformation.Data[count], jsonHandler));
+				CMDNodeControlPanel.Children.Add(new NodeCMDControl(this, count, nodeCMDInformation.Data[count], jsonHandler));
 				count++;
 			}
 		}
@@ -443,6 +443,8 @@ namespace FiveMServerLauncher
 
 		#region Event Handlers
 
+		#region Main Window
+
 		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			if (e.ChangedButton == MouseButton.Left)
@@ -450,72 +452,6 @@ namespace FiveMServerLauncher
 				DragMove();
 			}
 		}
-
-		#region Dispatch Ticks
-
-		private void UIUpdater_Tick(object sender, EventArgs e)
-		{
-			if (jsonHandler.UpdateUI)
-			{
-				CreateRestartControls();
-				CreateNodeCMDControls();
-				jsonHandler.UpdateUI = false;
-			}
-		}
-
-		private void RestartScheduler_Tick(object sender, EventArgs e)
-		{
-			if (jsonHandler.RestartInformation.Enabled)
-			{
-				foreach (RestartData restartData in restartInformation.Data)
-				{
-					if (DateTime.Now.Hour == restartData.RestartHour && DateTime.Now.Minute == restartData.RestartMinute)
-					{
-						RestartStopStart(restartData);
-					}
-					else
-					{
-						if ((restartData.RestartMinute - restartData.MinuteWarning) < 0)
-						{
-							if (DateTime.Now.Hour == (restartData.RestartHour - 1) && DateTime.Now.Minute == (60 - restartData.MinuteWarning))
-							{
-								RestartStopStartWarning(restartData);
-							}
-						}
-						else if (DateTime.Now.Hour == restartData.RestartHour && DateTime.Now.Minute == (restartData.RestartMinute - restartData.MinuteWarning))
-						{
-							RestartStopStartWarning(restartData);
-						}
-					}
-				}
-			}
-		}
-
-		private void RestartStopStart(RestartData restartData)
-		{
-			switch (restartData.RestartType)
-			{
-				case RestartType.Restart:
-					Restart();
-					break;
-				case RestartType.Start:
-					Start();
-					break;
-				case RestartType.Stop:
-					Stop();
-					break;
-			}
-		}
-
-		private void RestartStopStartWarning(RestartData restartData)
-		{
-			for (int i = 0; i < 5; i++)
-			{
-				serverProcess.StandardInput.WriteLine(@"say ====| " + restartData.MinuteWarning + @" Minutes Till An Automated Server " + restartData.RestartType + "@! |====");
-			}
-		}
-
-		#endregion Dispatch Ticks
 
 		private void ButtonAddRestartSchedule_Click(object sender, RoutedEventArgs e)
 		{
@@ -613,11 +549,20 @@ namespace FiveMServerLauncher
 		{
 			Close();
 		}
+
 		private void ButtonSettings_Click(object sender, RoutedEventArgs e)
 		{
 			ServerDirConfig serverDirConfig = new ServerDirConfig(this, jsonHandler);
 			serverDirConfig.ShowDialog();
 		}
+
+		internal void UpdateUI()
+		{
+			CreateRestartControls();
+			CreateNodeCMDControls();
+		}
+
+		#endregion Main Window
 
 		private void ButtonAddCMDNode_Click(object sender, RoutedEventArgs e)
 		{
@@ -625,6 +570,72 @@ namespace FiveMServerLauncher
 			CreateRestartControls();
 			CreateNodeCMDControls();
 		}
+
+		#region Dispatch Ticks
+
+		private void UIUpdater_Tick(object sender, EventArgs e)
+		{
+			if (jsonHandler.UpdateUI)
+			{
+				CreateRestartControls();
+				CreateNodeCMDControls();
+				jsonHandler.UpdateUI = false;
+			}
+		}
+
+		private void RestartScheduler_Tick(object sender, EventArgs e)
+		{
+			if (jsonHandler.RestartInformation.Enabled)
+			{
+				foreach (RestartData restartData in restartInformation.Data)
+				{
+					if (DateTime.Now.Hour == restartData.RestartHour && DateTime.Now.Minute == restartData.RestartMinute)
+					{
+						RestartStopStart(restartData);
+					}
+					else
+					{
+						if ((restartData.RestartMinute - restartData.MinuteWarning) < 0)
+						{
+							if (DateTime.Now.Hour == (restartData.RestartHour - 1) && DateTime.Now.Minute == (60 - restartData.MinuteWarning))
+							{
+								RestartStopStartWarning(restartData);
+							}
+						}
+						else if (DateTime.Now.Hour == restartData.RestartHour && DateTime.Now.Minute == (restartData.RestartMinute - restartData.MinuteWarning))
+						{
+							RestartStopStartWarning(restartData);
+						}
+					}
+				}
+			}
+		}
+
+		private void RestartStopStart(RestartData restartData)
+		{
+			switch (restartData.RestartType)
+			{
+				case RestartType.Restart:
+					Restart();
+					break;
+				case RestartType.Start:
+					Start();
+					break;
+				case RestartType.Stop:
+					Stop();
+					break;
+			}
+		}
+
+		private void RestartStopStartWarning(RestartData restartData)
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				serverProcess.StandardInput.WriteLine(@"say ====| " + restartData.MinuteWarning + @" Minutes Till An Automated Server " + restartData.RestartType + "@! |====");
+			}
+		}
+
+		#endregion Dispatch Ticks
 
 		#region Sliding Panel
 
@@ -720,6 +731,8 @@ namespace FiveMServerLauncher
 
 		#endregion SQL Backup
 
+		#region Resource Managment
+
 		private void TextBoxResourceSearch_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			stackResourceManagement.Children.Clear();
@@ -745,6 +758,8 @@ namespace FiveMServerLauncher
 				});
 			}
 		}
+
+		#endregion Resource Management
 
 		#endregion Event Handlers
 	}

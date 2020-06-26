@@ -9,13 +9,15 @@ namespace FiveMServerLauncher
 	/// </summary>
 	public partial class NodeCMDControl : UserControl
 	{
+		private readonly MainWindow MainWindow;
 		private readonly NodeCMD nodeCMD;
 		private readonly JSONHandler jsonHandler;
 
-		public NodeCMDControl(int count, NodeCMD nCMD, JSONHandler jHandler)
+		public NodeCMDControl(MainWindow mw, int count, NodeCMD nCMD, JSONHandler jHandler)
 		{
 			InitializeComponent();
 
+			MainWindow = mw;
 			nodeCMD = nCMD;
 			jsonHandler = jHandler;
 
@@ -29,7 +31,7 @@ namespace FiveMServerLauncher
 		{
 			jsonHandler.NodeCMDInformation.Data.Remove(nodeCMD);
 			jsonHandler.UpdateJSON();
-			jsonHandler.UpdateUI = true;
+			MainWindow.UpdateUI();
 		}
 
 		private void CheckBox_Checked(object sender, RoutedEventArgs e)

@@ -8,12 +8,15 @@ namespace FiveMServerLauncher
 	/// </summary>
 	public partial class RestartControl : UserControl
 	{
+		private readonly MainWindow MainWindow;
 		private readonly RestartData restartData;
 		private readonly JSONHandler jsonHandler;
 
-		public RestartControl(int count, RestartData rData, JSONHandler jHandler)
+		public RestartControl(MainWindow mw, int count, RestartData rData, JSONHandler jHandler)
 		{
 			InitializeComponent();
+
+			MainWindow = mw;
 			restartData = rData;
 			jsonHandler = jHandler;
 
@@ -89,7 +92,7 @@ namespace FiveMServerLauncher
 		{
 			jsonHandler.RestartInformation.Data.Remove(restartData);
 			jsonHandler.UpdateJSON();
-			jsonHandler.UpdateUI = true;
+			MainWindow.UpdateUI();
 		}
 	}
 }
