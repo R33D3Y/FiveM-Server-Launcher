@@ -121,7 +121,10 @@
                         <TabPanel>
                             <StackPanel HorizontalAlignment="Left" Height="550" Width="275">
                                 <Label x:Name="label" Content="MySQLDump.exe Directory:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5" />
-                                <TextBox x:Name="textBoxSQLDumpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxSQLDumpDir_LostFocus"/>
+                                <StackPanel Orientation="Horizontal" Margin="10,5,10,5">
+                                    <TextBox x:Name="textBoxSQLDumpDir" Margin="0,0,5,0" Width="225" Height="23" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxSQLDumpDir_LostFocus"/>
+                                    <Button x:Name="buttonBrowseSQLDumpDir" Content="..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" Height="23" Click="ButtonBrowseSQLDumpDir_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
+                                </StackPanel>
 
                                 <Label x:Name="label1" Content="Database Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
                                 <TextBox x:Name="textBoxDatabase" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxDatabase_LostFocus"/>
@@ -136,7 +139,10 @@
                                 <PasswordBox x:Name="textBoxPassword" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxPassword_LostFocus"/>
 
                                 <Label x:Name="label5" Content="Backup Directory:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="10,5,10,5"/>
-                                <TextBox x:Name="textBoxBackUpDir" Height="23" Margin="10,5,10,5" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxBackUpDir_LostFocus"/>
+                                <StackPanel Orientation="Horizontal" Margin="10,5,10,5">
+                                    <TextBox x:Name="textBoxBackUpDir" Margin="0,0,5,0" Width="225" Height="23" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" LostFocus="TextBoxBackUpDir_LostFocus"/>
+                                    <Button x:Name="buttonBrowseSQLBackupDir" Content="..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" Height="23" Click="ButtonBrowseSQLBackupDir_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
+                                </StackPanel>
 
                                 <CheckBox x:Name="checkBoxSQLBackUp" Content="Enable SQL Backups" Margin="10,5,10,5" Foreground="#FFF1F1F1" Checked="CheckBoxSQLBackUp_Checked"/>
                                 <Button x:Name="buttonManualSQLBackup" Content="Manual Backup" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="24" Click="ButtonManualSQLBackup_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555" Margin="10,75,10,10"/>

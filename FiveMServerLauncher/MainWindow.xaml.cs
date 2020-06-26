@@ -729,6 +729,28 @@ namespace FiveMServerLauncher
 			RunSQLBackup();
 		}
 
+		private void ButtonBrowseSQLDumpDir_Click(object sender, RoutedEventArgs e)
+		{
+			using (var dialog = new OpenFileDialog())
+			{
+				DialogResult result = dialog.ShowDialog();
+				sqlBackup.DumpDirectory = dialog.FileName;
+				textBoxSQLDumpDir.Text = dialog.FileName;
+				jsonHandler.UpdateJSON();
+			}
+		}
+
+		private void ButtonBrowseSQLBackupDir_Click(object sender, RoutedEventArgs e)
+		{
+			using (var dialog = new FolderBrowserDialog())
+			{
+				DialogResult result = dialog.ShowDialog();
+				sqlBackup.BackupDirectory = dialog.SelectedPath;
+				textBoxBackUpDir.Text = dialog.SelectedPath;
+				jsonHandler.UpdateJSON();
+			}
+		}
+
 		#endregion SQL Backup
 
 		#region Resource Managment
