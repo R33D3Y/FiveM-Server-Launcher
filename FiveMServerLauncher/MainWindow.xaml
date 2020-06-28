@@ -144,8 +144,13 @@
                                     <Button x:Name="buttonBrowseSQLBackupDir" Content="..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" Height="23" Click="ButtonBrowseSQLBackupDir_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
                                 </StackPanel>
 
+                                <StackPanel Orientation="Horizontal"  Margin="10,5,0,5">
+                                    <Label x:Name="label6" Content="Schedule Backup:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="0,5,0,5"/>
+                                    <ComboBox x:Name="comboBoxSQLSchedule" Background="#FF333337" BorderBrush="#FF434346" Margin="5,5,10,5" Width="148" SelectionChanged="comboBoxSQLSchedule_SelectionChanged"/>
+                                </StackPanel>
+                                
                                 <CheckBox x:Name="checkBoxSQLBackUp" Content="Enable SQL Backups" Margin="10,5,10,5" Foreground="#FFF1F1F1" Checked="CheckBoxSQLBackUp_Checked"/>
-                                <Button x:Name="buttonManualSQLBackup" Content="Manual Backup" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="24" Click="ButtonManualSQLBackup_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555" Margin="10,75,10,10"/>
+                                <Button x:Name="buttonManualSQLBackup" Content="Manual Backup" HorizontalAlignment="Center" VerticalAlignment="Top" Width="255" Height="24" Click="ButtonManualSQLBackup_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555" Margin="5,30,5,5"/>
                             </StackPanel>
                         </TabPanel>
                     </TabItem>

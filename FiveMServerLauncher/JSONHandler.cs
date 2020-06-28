@@ -46,6 +46,7 @@ namespace FiveMServerLauncher
 				writer.WriteValue(SQLBackup.User);
 				writer.WriteValue(SQLBackup.Password);
 				writer.WriteValue(SQLBackup.BackupDirectory);
+				writer.WriteValue(SQLBackup.BackupTimer);
 				writer.WriteEnd();
 
 				int count = 0;
@@ -90,7 +91,7 @@ namespace FiveMServerLauncher
 
 		public bool UpdateUI { get; set; }
 
-		public SQLBackup SQLBackup { get; private set; } = new SQLBackup(false, "", "", "", "", "", "");
+		public SQLBackup SQLBackup { get; private set; } = new SQLBackup(false, "", "", "", "", "", "", "");
 
 		public void SQLBackupUpdate()
 		{
@@ -158,6 +159,13 @@ namespace FiveMServerLauncher
 						if (reader.Value != null)
 						{
 							SQLBackup.BackupDirectory = reader.Value.ToString();
+						}
+
+						reader.Read(); // Backup Timer
+
+						if (reader.Value != null)
+						{
+							SQLBackup.BackupTimer = reader.Value.ToString();
 						}
 					}
 				}

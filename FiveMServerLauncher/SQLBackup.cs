@@ -9,8 +9,9 @@
 		public string User;
 		public string Password;
 		public string BackupDirectory;
+		public string BackupTimer;
 
-		public SQLBackup(bool enabled, string dumpDir, string dbName, string host, string user, string pass, string backupDir)
+		public SQLBackup(bool enabled, string dumpDir, string dbName, string host, string user, string pass, string backupDir, string timer)
 		{
 			Enabled = enabled;
 			DumpDirectory = dumpDir;
@@ -19,6 +20,7 @@
 			User = user;
 			Password = pass;
 			BackupDirectory = backupDir;
+			BackupTimer = timer;
 		}
 	}
 }

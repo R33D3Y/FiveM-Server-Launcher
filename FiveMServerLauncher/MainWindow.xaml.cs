@@ -27,8 +27,8 @@ namespace FiveMServerLauncher
 		private readonly NodeCMDInformation nodeCMDInformation;
 		private readonly SQLBackup sqlBackup;
 
-		private readonly DispatcherTimer UIUpdater = new DispatcherTimer();
-		private readonly DispatcherTimer RestartScheduler = new DispatcherTimer();
+		private readonly DispatcherTimer Scheduler = new DispatcherTimer();
+		private DateTime lastBackup = new DateTime();
 
 		private Process serverProcess;
 		private readonly List<Process> nodeProcesses = new List<Process>();
@@ -41,6 +41,7 @@ namespace FiveMServerLauncher
 		{
 			InitializeComponent();
 
+			lastBackup = DateTime.Now;
 			jsonHandler = new JSONHandler(Directory.GetCurrentDirectory());
 
 			jsonHandler.SQLBackupUpdate();
@@ -63,13 +64,9 @@ namespace FiveMServerLauncher
 			CreateRestartControls();
 			CreateNodeCMDControls();
 
-			UIUpdater.Interval = TimeSpan.FromSeconds(1);
-			UIUpdater.Tick += UIUpdater_Tick;
-			UIUpdater.Start();
-
-			RestartScheduler.Interval = TimeSpan.FromSeconds(60);
-			RestartScheduler.Tick += RestartScheduler_Tick;
-			RestartScheduler.Start();
+			Scheduler.Interval = TimeSpan.FromSeconds(60);
+			Scheduler.Tick += Scheduler_Tick;
+			Scheduler.Start();
 
 			Stop();
 
@@ -78,6 +75,18 @@ namespace FiveMServerLauncher
 
 		private void CreateSQLBackupControl()
 		{
+			comboBoxSQLSchedule.Items.Add("10 Minutes");
+			comboBoxSQLSchedule.Items.Add("20 Minutes");
+			comboBoxSQLSchedule.Items.Add("30 Minutes");
+			comboBoxSQLSchedule.Items.Add("40 Minutes");
+			comboBoxSQLSchedule.Items.Add("50 Minutes");
+			comboBoxSQLSchedule.Items.Add("1 Hour");
+			comboBoxSQLSchedule.Items.Add("2 Hours");
+			comboBoxSQLSchedule.Items.Add("3 Hours");
+			comboBoxSQLSchedule.Items.Add("4 Hours");
+			comboBoxSQLSchedule.Items.Add("5 Hours");
+			comboBoxSQLSchedule.Items.Add("6 Hours");
+
 			checkBoxSQLBackUp.IsChecked = sqlBackup.Enabled;
 			textBoxSQLDumpDir.Text = sqlBackup.DumpDirectory;
 			textBoxDatabase.Text = sqlBackup.DatabaseName;
@@ -85,6 +94,7 @@ namespace FiveMServerLauncher
 			textBoxUser.Text = sqlBackup.User;
 			textBoxPassword.Password = sqlBackup.Password;
 			textBoxBackUpDir.Text = sqlBackup.BackupDirectory;
+			comboBoxSQLSchedule.SelectedItem = sqlBackup.BackupTimer;
 		}
 
 		private void CreateRestartControls()
@@ -210,7 +220,10 @@ namespace FiveMServerLauncher
 			}
 			catch (Exception) { }
 
-			RunSQLBackup();
+			if (sqlBackup.Enabled)
+			{
+				RunSQLBackup();
+			}
 
 			resourceManagerControls.Clear();
 			stackResourceManagement.Children.Clear();
@@ -424,6 +437,8 @@ namespace FiveMServerLauncher
 
 			sqlBackupProcess.StartInfo = sqlBackupInfo;
 			sqlBackupProcess.Start();
+
+			lastBackup = DateTime.Now;
 		}
 
 		internal void SendToConsole(string v)
@@ -573,17 +588,7 @@ namespace FiveMServerLauncher
 
 		#region Dispatch Ticks
 
-		private void UIUpdater_Tick(object sender, EventArgs e)
-		{
-			if (jsonHandler.UpdateUI)
-			{
-				CreateRestartControls();
-				CreateNodeCMDControls();
-				jsonHandler.UpdateUI = false;
-			}
-		}
-
-		private void RestartScheduler_Tick(object sender, EventArgs e)
+		private void Scheduler_Tick(object sender, EventArgs e)
 		{
 			if (jsonHandler.RestartInformation.Enabled)
 			{
@@ -607,6 +612,79 @@ namespace FiveMServerLauncher
 							RestartStopStartWarning(restartData);
 						}
 					}
+				}
+			}
+
+			if (sqlBackup.Enabled)
+			{
+				switch (sqlBackup.BackupTimer)
+				{
+					case "10 Minutes":
+						if (DateTime.Now.AddMinutes(-10) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "20 Minutes":
+						if (DateTime.Now.AddMinutes(-20) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "30 Minutes":
+						if (DateTime.Now.AddMinutes(-30) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "40 Minutes":
+						if (DateTime.Now.AddMinutes(-40) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "50 Minutes":
+						if (DateTime.Now.AddMinutes(-50) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "1 Hour":
+						if (DateTime.Now.AddHours(-1) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "2 Hours":
+						if (DateTime.Now.AddHours(-2) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "3 Hours":
+						if (DateTime.Now.AddHours(-3) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "4 Hours":
+						if (DateTime.Now.AddHours(-4) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "5 Hours":
+						if (DateTime.Now.AddHours(-5) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
+					case "6 Hours":
+						if (DateTime.Now.AddHours(-6) > lastBackup)
+						{
+							RunSQLBackup();
+						}
+						break;
 				}
 			}
 		}
@@ -749,6 +827,12 @@ namespace FiveMServerLauncher
 				textBoxBackUpDir.Text = dialog.SelectedPath;
 				jsonHandler.UpdateJSON();
 			}
+		}
+
+		private void comboBoxSQLSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			sqlBackup.BackupTimer = (string)comboBoxSQLSchedule.SelectedItem;
+			jsonHandler.UpdateJSON();
 		}
 
 		#endregion SQL Backup
