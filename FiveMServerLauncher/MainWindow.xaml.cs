@@ -126,6 +126,14 @@ namespace FiveMServerLauncher
 
 		private void Start()
 		{
+			startServer.Visibility = Visibility.Collapsed;
+
+			stopServer.Visibility = Visibility.Visible;
+			restartServer.Visibility = Visibility.Visible;
+			inputText.Visibility = Visibility.Visible;
+			submitInput.Visibility = Visibility.Visible;
+			labelConsole.Visibility = Visibility.Visible;
+
 			DecideLogLocation();
 			ResetConsole();
 			nodeProcesses.Clear();
@@ -176,6 +184,14 @@ namespace FiveMServerLauncher
 
 		private void Stop()
 		{
+			startServer.Visibility = Visibility.Visible;
+
+			stopServer.Visibility = Visibility.Collapsed;
+			restartServer.Visibility = Visibility.Collapsed;
+			inputText.Visibility = Visibility.Collapsed;
+			submitInput.Visibility = Visibility.Collapsed;
+			labelConsole.Visibility = Visibility.Collapsed;
+
 			if (serverProcess != null && !serverProcess.HasExited)
 			{
 				serverProcess.Kill();
@@ -520,21 +536,31 @@ namespace FiveMServerLauncher
 
 		private void RestartServer_Click(object sender, RoutedEventArgs e)
 		{
-			Restart();
+			MessageBoxResult msgResult = System.Windows.MessageBox.Show("Are You Sure?", "FiveM Server Launcher", MessageBoxButton.YesNo, (MessageBoxImage)MessageBoxIcon.Error);
 
-			for (int i = 0; i < 10; i++)
+			if (msgResult == MessageBoxResult.Yes)
 			{
-				Append_Text("=============== SERVER RESTARTED MANUALLY ===============");
+				Restart();
+
+				for (int i = 0; i < 10; i++)
+				{
+					Append_Text("=============== SERVER RESTARTED MANUALLY ===============");
+				}
 			}
 		}
 
 		private void StopServer_Click(object sender, RoutedEventArgs e)
 		{
-			Stop();
+			MessageBoxResult msgResult = System.Windows.MessageBox.Show("Are You Sure?", "FiveM Server Launcher", MessageBoxButton.YesNo, (MessageBoxImage)MessageBoxIcon.Error);
 
-			for (int i = 0; i < 10; i++)
+			if (msgResult == MessageBoxResult.Yes)
 			{
-				Append_Text("=============== SERVER STOPPED MANUALLY ===============");
+				Stop();
+
+				for (int i = 0; i < 10; i++)
+				{
+					Append_Text("=============== SERVER STOPPED MANUALLY ===============");
+				}
 			}
 		}
 

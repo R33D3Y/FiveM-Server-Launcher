@@ -148,7 +148,7 @@
                                     <Label x:Name="label6" Content="Schedule Backup:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="0,5,0,5"/>
                                     <ComboBox x:Name="comboBoxSQLSchedule" Background="#FF333337" BorderBrush="#FF434346" Margin="5,5,10,5" Width="148" SelectionChanged="comboBoxSQLSchedule_SelectionChanged"/>
                                 </StackPanel>
-                                
+
                                 <CheckBox x:Name="checkBoxSQLBackUp" Content="Enable SQL Backups" Margin="10,5,10,5" Foreground="#FFF1F1F1" Checked="CheckBoxSQLBackUp_Checked"/>
                                 <Button x:Name="buttonManualSQLBackup" Content="Manual Backup" HorizontalAlignment="Center" VerticalAlignment="Top" Width="255" Height="24" Click="ButtonManualSQLBackup_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555" Margin="5,30,5,5"/>
                             </StackPanel>
@@ -175,12 +175,12 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Label x:Name="label_Copy" Content="Commands" HorizontalAlignment="Left" Margin="39,620,0,0" VerticalAlignment="Top" Height="34" Width="71" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FFF1F1F1"/>
+        <Label x:Name="labelConsole" Content="Commands" HorizontalAlignment="Left" Margin="39,620,0,0" VerticalAlignment="Top" Height="34" Width="71" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FFF1F1F1"/>
         <TextBox x:Name="inputText" HorizontalAlignment="Left" Height="24" Margin="115,627,0,0" VerticalAlignment="Top" Width="589" VerticalContentAlignment="Center" KeyDown="InputText_KeyDown" Background="#FF2D2D30" Foreground="#FFF1F1F1"/>
         <Button x:Name="submitInput" Content="Submit" HorizontalAlignment="Left" Margin="709,627,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="SubmitInput_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
-        <Button x:Name="startServer" Content="Start" HorizontalAlignment="Left" Margin="39,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="StartServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
-        <Button x:Name="stopServer" Content="Stop" HorizontalAlignment="Left" Margin="269,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="StopServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
-        <Button x:Name="restartServer" Content="Restart Now" HorizontalAlignment="Left" Margin="154,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="RestartServer_Click" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF555555"/>
+        <Button x:Name="startServer" Content="Start" HorizontalAlignment="Left" Margin="39,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="StartServer_Click" Foreground="#FFF1F1F1" Background="#FF2B462B" BorderBrush="#FF555555"/>
+        <Button x:Name="stopServer" Content="Stop" HorizontalAlignment="Left" Margin="39,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="StopServer_Click" Foreground="#FFF1F1F1" Background="#FF3E2828" BorderBrush="#FF555555"/>
+        <Button x:Name="restartServer" Content="Restart Now" HorizontalAlignment="Left" Margin="154,659,0,0" VerticalAlignment="Top" Width="110" Height="24" Click="RestartServer_Click" Foreground="#FFF1F1F1" Background="#FF4B4331" BorderBrush="#FF555555"/>
         <Label x:Name="versionLabel" Content="Version 0.0.0.0" HorizontalAlignment="Left" Margin="647,659,0,0" VerticalAlignment="Top" Height="24" Width="172" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Foreground="#FF727272"/>
     </Grid>
 </Window>
