@@ -427,7 +427,7 @@ namespace FiveMServerLauncher
 
 		private void RunSQLBackup()
 		{
-			string folder = jsonHandler.SQLBackup.BackupDirectory + @"\" + DateTime.Now.ToString("MM-dd-yyyy");
+			string folder = jsonHandler.SQLBackup.BackupDirectory + @"\" + DateTime.Now.ToString("yyyy-MM-dd");
 
 			if (!Directory.Exists(folder))
 			{
