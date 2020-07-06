@@ -179,6 +179,9 @@
     </ApplicationDefinition>
     <Compile Include="AppToken.cs" />
     <Compile Include="MySQLHandler.cs" />
+    <Compile Include="UsersControl.xaml.cs">
+      <DependentUpon>UsersControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ResourceManagerControl.xaml.cs">
       <DependentUpon>ResourceManagerControl.xaml</DependentUpon>
     </Compile>
@@ -210,6 +213,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NodeCMDControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UsersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

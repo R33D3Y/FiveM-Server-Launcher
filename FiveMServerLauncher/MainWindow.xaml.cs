@@ -34,8 +34,10 @@ namespace FiveMServerLauncher
 		private readonly List<Process> nodeProcesses = new List<Process>();
 
 		private List<ResourceManagerControl> resourceManagerControls = new List<ResourceManagerControl>();
+		private List<UsersControl> usersControls = new List<UsersControl>();
 
 		private string logFileLocation = "";
+		private int playerCount = 0;
 
 		public MainWindow()
 		{
@@ -68,7 +70,15 @@ namespace FiveMServerLauncher
 			Scheduler.Tick += Scheduler_Tick;
 			Scheduler.Start();
 
-			Stop();
+			startServer.Visibility = Visibility.Visible;
+
+			stopServer.Visibility = Visibility.Collapsed;
+			restartServer.Visibility = Visibility.Collapsed;
+			inputText.Visibility = Visibility.Collapsed;
+			submitInput.Visibility = Visibility.Collapsed;
+			labelConsole.Visibility = Visibility.Collapsed;
+
+			//Stop();
 
 			versionLabel.Content = "Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 		}
@@ -178,12 +188,24 @@ namespace FiveMServerLauncher
 
 		private void Restart()
 		{
+			for (int i = 0; i < playerCount; i++)
+			{
+				SendToConsole("clientkick " + i + " Server is restarting, check Discord for further information.");
+			}
+
+			playerCount = 0;
+
 			Stop();
 			Start();
 		}
 
 		private void Stop()
 		{
+			for (int i = 0; i < playerCount; i++)
+			{
+				SendToConsole("clientkick " + i + " Server is stopping, check Discord for further information.");
+			}
+
 			startServer.Visibility = Visibility.Visible;
 
 			stopServer.Visibility = Visibility.Collapsed;
@@ -338,6 +360,17 @@ namespace FiveMServerLauncher
 					ControlResourceManager(split[3], false);
 				}
 			}
+
+			if (str.ToLower().Contains("info: user") && str.ToLower().Contains("authenticated"))
+			{
+				split = str.Split(new string[] { "INFO: User " }, StringSplitOptions.None);
+				split = split[1].Split(new string[] { " authenticated - " }, StringSplitOptions.None);
+
+				string id = split[0].Split(']')[0] + "]";
+				string name = split[0].Split(']')[1];
+
+				//ControlUsers(id, name);
+			}
 		}
 
 		private void ControlResourceManager(string str, bool run)
@@ -370,6 +403,38 @@ namespace FiveMServerLauncher
 			}
 
 			resourceManagerControls = resourceManagerControls.OrderBy(x => x.ResourceName).ToList();
+		}
+
+		private void ControlUsers(string id, string name)
+		{
+			bool found = false;
+
+			foreach (UsersControl uc in usersControls)
+			{
+				if (uc.ID == id)
+				{
+					found = true;
+
+					stackUsers.Children.Remove(uc);
+					usersControls.Remove(uc);
+
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				playerCount++;
+
+				System.Windows.Application.Current.Dispatcher.Invoke(delegate
+				{
+					UsersControl uc = new UsersControl(this, name, id);
+					stackUsers.Children.Add(uc);
+					usersControls.Add(uc);
+				});
+			}
+
+			usersControls = usersControls.OrderBy(x => x.ID).ToList();
 		}
 
 		private void UpdateConsole(string output)
@@ -531,7 +596,9 @@ namespace FiveMServerLauncher
 				Append_Text("=============== SERVER STARTED MANUALLY ===============");
 			}
 
-			Start();
+			playerCount = 0;
+
+			Restart();
 		}
 
 		private void RestartServer_Click(object sender, RoutedEventArgs e)
@@ -735,7 +802,7 @@ namespace FiveMServerLauncher
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				serverProcess.StandardInput.WriteLine(@"say ====| " + restartData.MinuteWarning + @" Minutes Till An Automated Server " + restartData.RestartType + "@! |====");
+				serverProcess.StandardInput.WriteLine(@"say ====| " + restartData.MinuteWarning + @" Minutes Till An Automated Server " + restartData.RestartType + @"! |====");
 			}
 		}
 
@@ -843,7 +910,7 @@ namespace FiveMServerLauncher
 				jsonHandler.UpdateJSON();
 			}
 		}
-
+		 
 		private void ButtonBrowseSQLBackupDir_Click(object sender, RoutedEventArgs e)
 		{
 			using (var dialog = new FolderBrowserDialog())
@@ -855,7 +922,7 @@ namespace FiveMServerLauncher
 			}
 		}
 
-		private void comboBoxSQLSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void ComboBoxSQLSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			sqlBackup.BackupTimer = (string)comboBoxSQLSchedule.SelectedItem;
 			jsonHandler.UpdateJSON();
@@ -892,6 +959,40 @@ namespace FiveMServerLauncher
 		}
 
 		#endregion Resource Management
+
+		#region Users
+
+		private void TextBoxUsersSearch_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			stackUsers.Children.Clear();
+
+			if (textBoxResourceSearch.Text != "")
+			{
+				foreach (UsersControl uc in usersControls)
+				{
+					if (uc.ID.ToLower().Contains(textBoxUsersSearch.Text.ToLower()))
+					{
+						stackUsers.Children.Add(uc);
+					}
+					else if (uc.UserName.ToLower().Contains(textBoxUsersSearch.Text.ToLower()))
+					{
+						stackUsers.Children.Add(uc);
+					}
+				}
+			}
+			else
+			{
+				System.Windows.Application.Current.Dispatcher.Invoke(delegate
+				{
+					foreach (UsersControl uc in usersControls)
+					{
+						stackUsers.Children.Add(uc);
+					}
+				});
+			}
+		}
+
+		#endregion Users
 
 		#endregion Event Handlers
 	}

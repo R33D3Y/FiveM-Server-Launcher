@@ -146,7 +146,7 @@
 
                                 <StackPanel Orientation="Horizontal"  Margin="10,5,0,5">
                                     <Label x:Name="label6" Content="Schedule Backup:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1F1F1" Margin="0,5,0,5"/>
-                                    <ComboBox x:Name="comboBoxSQLSchedule" Background="#FF333337" BorderBrush="#FF434346" Margin="5,5,10,5" Width="148" SelectionChanged="comboBoxSQLSchedule_SelectionChanged"/>
+                                    <ComboBox x:Name="comboBoxSQLSchedule" Background="#FF333337" BorderBrush="#FF434346" Margin="5,5,10,5" Width="148" SelectionChanged="ComboBoxSQLSchedule_SelectionChanged"/>
                                 </StackPanel>
 
                                 <CheckBox x:Name="checkBoxSQLBackUp" Content="Enable SQL Backups" Margin="10,5,10,5" Foreground="#FFF1F1F1" Checked="CheckBoxSQLBackUp_Checked"/>
@@ -160,6 +160,16 @@
                                 <TextBox x:Name="textBoxResourceSearch" Height="23" Margin="10,10,10,10" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" TextChanged="TextBoxResourceSearch_TextChanged"/>
                                 <ScrollViewer HorizontalAlignment="Left" Height="505" VerticalAlignment="Top" Width="275" Background="#FF252526">
                                     <StackPanel x:Name="stackResourceManagement" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </TabPanel>
+                    </TabItem>
+                    <TabItem Header="Players" Visibility="Collapsed">
+                        <TabPanel>
+                            <StackPanel>
+                                <TextBox x:Name="textBoxUsersSearch" Height="23" Margin="10,10,10,10" VerticalContentAlignment="Center" Background="#FF2D2D30" Foreground="#FFF1F1F1" TextChanged="TextBoxUsersSearch_TextChanged"/>
+                                <ScrollViewer HorizontalAlignment="Left" Height="505" VerticalAlignment="Top" Width="275" Background="#FF252526">
+                                    <StackPanel x:Name="stackUsers" HorizontalAlignment="Left" VerticalAlignment="Top" CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" Background="#FFD1D1D1"/>
                                 </ScrollViewer>
                             </StackPanel>
                         </TabPanel>
