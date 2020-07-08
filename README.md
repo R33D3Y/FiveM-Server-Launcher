@@ -1,6 +1,8 @@
 # FiveM-Server-Launcher
 Just a simple Server Launcher to help host a FiveM server; built around our and other server use.
 
+https://github.com/R33D3Y/FiveM-Server-Launcher/files/4892286/Release.zip
+
 ## Installation/First-Time Use
 ### Directory Selection
 When you first boot up the Launcher it will present a screen to enter the Server Directory and Server Config Directory.
