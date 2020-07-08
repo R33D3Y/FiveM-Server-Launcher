@@ -31,7 +31,7 @@ To access the CMD/Node Scripts click the button on the left labeled 'Show Restar
 1. Click the green plus button in the bottom right of the panel.
 2. Alter the data under 'CMD Command 0'; this is your first CMD/Node Script.
    - Enter the Script Directory or click the '...' button to use the FolderDialog selector.
-   - Enter the Arguments for the script to run.
+   - Enter the Arguments for the script to run. An example is 'npm start'/'node main.js'
 3. Tick 'Enable On Server Start' to make sure these changes take effect when the Server is started.
 
 ### SQL Backups
