@@ -1,5 +1,4 @@
-﻿using Microsoft.AppCenter.Analytics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -573,7 +572,6 @@ namespace FiveMServerLauncher
 				if (serverProcess != null)
 				{
 					serverProcess.StandardInput.WriteLine(inputText.Text);
-					Analytics.TrackEvent("Input Commands: " + inputText.Text);
 					inputText.Text = "";
 				}
 			}
@@ -584,7 +582,6 @@ namespace FiveMServerLauncher
 			if (serverProcess != null)
 			{
 				serverProcess.StandardInput.WriteLine(inputText.Text);
-				Analytics.TrackEvent("Input Commands: " + inputText.Text);
 				inputText.Text = "";
 			}
 		}
@@ -818,7 +815,6 @@ namespace FiveMServerLauncher
 		private void BtnLeftMenuShow_Click(object sender, RoutedEventArgs e)
 		{
 			ShowHideMenu("sbShowLeftMenu", btnLeftMenuHide, btnLeftMenuShow, pnlLeftMenu);
-			Analytics.TrackEvent("Restart Schedule & CMD/Node");
 		}
 
 		private void BtnRightMenuHide_Click(object sender, RoutedEventArgs e)
@@ -829,7 +825,6 @@ namespace FiveMServerLauncher
 		private void BtnRightMenuShow_Click(object sender, RoutedEventArgs e)
 		{
 			ShowHideMenu("sbShowRightMenu", btnRightMenuHide, btnRightMenuShow, pnlRightMenu);
-			Analytics.TrackEvent("SQL Data");
 		}
 
 		private void ShowHideMenu(string board, System.Windows.Controls.Button btnHide, System.Windows.Controls.Button btnShow, StackPanel pnl)

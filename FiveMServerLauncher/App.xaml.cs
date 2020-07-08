@@ -1,7 +1,4 @@
 ﻿using System.Windows;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 
 namespace FiveMServerLauncher
 {
@@ -13,9 +10,6 @@ namespace FiveMServerLauncher
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
-			//AppCenter.LogLevel = LogLevel.Verbose;
-			AppCenter.Start(AppToken.ID, typeof(Analytics), typeof(Crashes));
-			AppCenter.SetEnabledAsync(true);
 		}
 	}
 }
