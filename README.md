@@ -2,6 +2,7 @@
 Just a simple Server Launcher to help host a FiveM server; built around our and other server use.
 
 Download - https://github.com/R33D3Y/FiveM-Server-Launcher/files/4892286/Release.zip
+FiveM Forum Post - https://forum.cfx.re/t/release-beta-fivem-server-launcher-windows-only/1503198
 
 ## Installation/First-Time Use
 ### Pre-Requisites
